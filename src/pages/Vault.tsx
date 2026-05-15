@@ -3,11 +3,11 @@ import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { Trash2, AlertTriangle, Loader2, CheckCircle, ShieldAlert } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { useAuthContext } from '../components/AuthProvider';
+import { useAuthContext } from '../contexts/AuthProvider';
 import LoginPrompt from '../components/LoginPrompt';
-import { db } from '../lib/firebase';
+import { db } from '../services/firebase';
 import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
-import { handleFirestoreError, OperationType } from '../lib/firestore_utils';
+import { handleFirestoreError, OperationType } from '../services/firestore_utils';
 
 export default function VaultPage() {
   const { user } = useAuthContext();

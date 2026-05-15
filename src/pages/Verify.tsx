@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { ShieldCheck, Loader2, XCircle, Search, RefreshCcw, ArrowRight, CheckCircle, Fingerprint } from 'lucide-react';
 import { motion } from 'motion/react';
-import { db } from '../lib/firebase';
+import { db } from '../services/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import { useAuthContext } from '../components/AuthProvider';
+import { useAuthContext } from '../contexts/AuthProvider';
 
 export default function VerifyPage() {
   const { user } = useAuthContext();

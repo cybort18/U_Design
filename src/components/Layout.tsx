@@ -3,7 +3,7 @@ import { ShieldCheck, Home, Menu, X, Shield, Search, LayoutGrid, Info, LogOut, L
 import { cn } from '../lib/utils';
 import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
-import { useAuthContext } from './AuthProvider';
+import { useAuthContext } from '../contexts/AuthProvider';
 
 function AuthWidget() {
   const { user, loading, signIn, signOut } = useAuthContext();
@@ -14,7 +14,18 @@ function AuthWidget() {
     return (
       <div className="mb-6 flex flex-col gap-3">
         <div className="flex items-center gap-3 bg-black/40 px-3 py-2 rounded-lg border border-white/5">
-          <img src={user.photoURL || `https://ui-avatars.com/api/?name=${user.email}`} alt="Avatar" className="w-8 h-8 rounded-full border border-white/10" />
+          <img 
+            src={user.photoURL || `https://ui-avatars.com/api/?name=${user.email || 'User'}`} 
+            alt="Avatar" 
+            referrerPolicy="no-referrer"
+            className="w-8 h-8 rounded-full border border-white/10 object-cover" 
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              if (!target.src.includes('ui-avatars')) {
+                target.src = `https://ui-avatars.com/api/?name=${user.email || 'User'}&background=random`;
+              }
+            }}
+          />
           <div className="flex flex-col flex-1 truncate">
             <span className="text-xs text-white truncate font-medium">{user.displayName || user.email}</span>
             <span className="text-[10px] text-neon-green/80 uppercase tracking-wider font-mono truncate">Connected</span>

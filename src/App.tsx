@@ -5,7 +5,7 @@ import ProtectPage from './pages/Protect';
 import VerifyPage from './pages/Verify';
 import VaultPage from './pages/Vault';
 import HowItWorksPage from './pages/HowItWorks';
-import { AuthProvider } from './components/AuthProvider';
+import { AuthProvider } from './contexts/AuthProvider';
 
 export default function App() {
   return (

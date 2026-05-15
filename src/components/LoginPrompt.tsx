@@ -1,5 +1,5 @@
 import { ShieldAlert, LogIn } from 'lucide-react';
-import { useAuthContext } from './AuthProvider';
+import { useAuthContext } from '../contexts/AuthProvider';
 
 export default function LoginPrompt({ title, message }: { title: string; message: string }) {
   const { signIn } = useAuthContext();

@@ -5,11 +5,11 @@ import { UploadCloud, CheckCircle, ShieldAlert, Copy, Download, RefreshCcw, Arro
 import { GoogleGenAI } from '@google/genai';
 import { toPng } from 'html-to-image';
 import { motion, AnimatePresence } from 'motion/react';
-import { useAuthContext } from '../components/AuthProvider';
+import { useAuthContext } from '../contexts/AuthProvider';
 import LoginPrompt from '../components/LoginPrompt';
-import { db } from '../lib/firebase';
+import { db } from '../services/firebase';
 import { collection, doc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { handleFirestoreError, OperationType } from '../lib/firestore_utils';
+import { handleFirestoreError, OperationType } from '../services/firestore_utils';
 
 type ProcessState = 'idle' | 'processing' | 'success' | 'error' | 'duplicate';
 
@@ -191,11 +191,11 @@ export default function ProtectPage() {
     }
   };
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
+  const onDrop = (acceptedFiles: File[]) => {
     if (acceptedFiles && acceptedFiles.length > 0) {
       processArtwork(acceptedFiles[0]);
     }
-  }, []);
+  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
