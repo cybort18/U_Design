@@ -1,7 +1,3 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
-
 # U_Design
 
 U_Design is a cutting-edge **Intellectual Property (IP) Protection Platform** tailored for digital artists, designers, and creators. Operating at the intersection of Web 2.5 and Web 3, U_Design ensures that original digital artworks remain secure, traceable, and undeniably authentic.
