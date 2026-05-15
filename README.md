@@ -63,4 +63,4 @@ Navigate to `http://localhost:3000` to see the application in action.
 4. **Certificate**: The platform renders a "Verified Digital Asset" certificate that can be saved locally.
 
 ---
-*Built with ❤️ for digital creators and artists.*
+*Built for digital creators and artists.*
