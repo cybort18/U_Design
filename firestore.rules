@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() { return request.auth != null; }
+    function isVerified() { return request.auth.token.email_verified == true; }
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+
+    function isValidArtwork(data) {
+      return data.keys().hasAll(['userId', 'ipfsHash', 'timestamp', 'createdAt', 'fingerprint', 'fileName', 'fileSize', 'fileType'])
+        && data.keys().size() == 8
+        && data.userId == request.auth.uid
+        && data.ipfsHash is string && data.ipfsHash.size() <= 200
+        && data.timestamp is string && data.timestamp.size() <= 100
+        && data.fileName is string && data.fileName.size() <= 256
+        && data.fileType is string && data.fileType.size() <= 100
+        && data.fileSize is number
+        && data.fingerprint is map
+        && data.createdAt == request.time;
+    }
+
+    match /artworks/{artworkId} {
+      allow get: if isSignedIn() && isVerified() && isValidId(artworkId) && existing().userId == request.auth.uid;
+      allow list: if isSignedIn() && isVerified() && existing().userId == request.auth.uid;
+      allow create: if isSignedIn() && isVerified() && isValidId(artworkId) && isValidArtwork(incoming());
+      allow delete: if isSignedIn() && isVerified() && isValidId(artworkId) && existing().userId == request.auth.uid;
+      allow update: if false; // Artworks are immutable once created
+    }
+  }
+}

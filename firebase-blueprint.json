@@ -1,0 +1,52 @@
+{
+  "entities": {
+    "Artwork": {
+      "title": "Artwork",
+      "description": "Represents a protected artwork asset",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The UID of the user who owns the artwork"
+        },
+        "ipfsHash": {
+          "type": "string",
+          "description": "The Pinata IPFS file hash"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "The timestamp of protection"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Firestore server timestamp"
+        },
+        "fingerprint": {
+          "type": "object",
+          "description": "The AI-generated semantic fingerprint data"
+        },
+        "fileName": {
+          "type": "string",
+          "description": "Original file name"
+        },
+        "fileSize": {
+          "type": "number",
+          "description": "Original file size in bytes"
+        },
+        "fileType": {
+          "type": "string",
+          "description": "Original file MIME type"
+        }
+      },
+      "required": ["userId", "ipfsHash", "timestamp", "createdAt", "fingerprint", "fileName", "fileSize", "fileType"]
+    }
+  },
+  "firestore": {
+    "artworks/{artworkId}": {
+      "schema": {
+        "$ref": "#/entities/Artwork"
+      },
+      "description": "Collection of all protected artworks"
+    }
+  }
+}
