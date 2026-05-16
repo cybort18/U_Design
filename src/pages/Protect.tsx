@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useAuthContext } from '../contexts/AuthProvider';
 import LoginPrompt from '../components/LoginPrompt';
 import { db } from '../services/firebase';
-import { collection, doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, doc, setDoc, serverTimestamp, getDocs, query, where } from 'firebase/firestore';
 import { handleFirestoreError, OperationType } from '../services/firestore_utils';
 
 type ProcessState = 'idle' | 'processing' | 'success' | 'error' | 'duplicate';
@@ -70,9 +70,19 @@ export default function ProtectPage() {
 
       setProcessStep('checking');
       
-      // Wait, let's just query firestore to check if duplicate exist?
-      // Since we don't have indexes right away, we could just let the user save it, 
-      // or we can fetch all user docs and check in memory. It's fine for prototype.
+      // Global Duplicate Check
+      const artworksRef = collection(db, 'artworks');
+      const duplicateQuery = query(artworksRef, where('ipfsHash', '==', hash));
+      const querySnapshot = await getDocs(duplicateQuery);
+      
+      if (!querySnapshot.empty) {
+        setDuplicateHash(hash);
+        setProcessState('duplicate');
+        processingRef.current = false;
+        return;
+      }
+
+      setProcessStep('analyzing');
       const aiData = await analyzeWithGemini(selectedFile);
 
       setIpfsHash(hash);
@@ -489,12 +499,16 @@ export default function ProtectPage() {
             <div className="relative z-10 flex flex-col md:flex-row gap-8 lg:gap-12">
               
               {/* Left Column: Image */}
-              <div className="w-full md:w-5/12 flex-shrink-0 flex flex-col">
-                <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-black border border-white/10 relative group shadow-lg flex-1">
-                  <img src={previewUrl!} alt="Protected Original" className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 border border-white/10 rounded-3xl pointer-events-none z-10 mix-blend-overlay"></div>
+              <div className="w-full md:w-5/12 flex-shrink-0 flex flex-col min-h-[350px]">
+                <div className="w-full h-full rounded-3xl overflow-hidden bg-black border border-white/10 relative group shadow-lg flex-1">
+                  {/* Blurred Background to fill empty space */}
+                  <img src={previewUrl!} alt="Background" className="absolute inset-0 w-full h-full object-cover opacity-30 blur-2xl scale-125" />
+                  {/* Actual Image without cropping */}
+                  <img src={previewUrl!} alt="Protected Original" className="absolute inset-0 w-full h-full object-contain p-2 z-10 drop-shadow-2xl" />
+                  
+                  <div className="absolute inset-0 border border-white/10 rounded-3xl pointer-events-none z-20 mix-blend-overlay"></div>
                   {/* Holographic overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-neon-green/20 via-transparent to-neon-blue/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none mix-blend-screen"></div>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-neon-green/20 via-transparent to-neon-blue/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none mix-blend-screen z-30"></div>
                 </div>
               </div>
 
@@ -569,17 +583,19 @@ export default function ProtectPage() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-white/5 p-4 sm:p-5 rounded-xl border border-white/5 backdrop-blur-sm">
+                      <div className="bg-white/5 p-4 sm:p-5 rounded-xl border border-white/5 backdrop-blur-sm min-w-0">
                           <p className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-2">Timestamp (UTC)</p>
-                          <p className="text-sm font-medium text-white flex items-center gap-2">
-                            {new Date(timeStamped).toISOString().split('T')[0]} 
-                            <span className="text-gray-500">&bull;</span> 
-                            <span>{new Date(timeStamped).toISOString().split('T')[1].substring(0,8)}</span>
-                          </p>
+                          <div className="text-sm font-medium text-white flex flex-col xl:flex-row xl:items-center gap-1 xl:gap-2">
+                            <span className="whitespace-nowrap">{new Date(timeStamped).toISOString().split('T')[0]}</span>
+                            <span className="hidden xl:inline text-gray-500">&bull;</span> 
+                            <span className="whitespace-nowrap">{new Date(timeStamped).toISOString().split('T')[1].substring(0,8)}</span>
+                          </div>
                       </div>
-                      <div className="bg-white/5 p-4 sm:p-5 rounded-xl border border-white/5 backdrop-blur-sm">
+                      <div className="bg-white/5 p-4 sm:p-5 rounded-xl border border-white/5 backdrop-blur-sm min-w-0">
                           <p className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-2">Creator</p>
-                          <p className="text-sm font-medium text-white">Registered User</p>
+                          <p className="text-sm font-medium text-white break-words line-clamp-2" title={user?.displayName || user?.email || 'Registered User'}>
+                            {user?.displayName || user?.email || 'Registered User'}
+                          </p>
                       </div>
                   </div>
                 </div>

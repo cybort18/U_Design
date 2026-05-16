@@ -26,7 +26,7 @@ export default function HowItWorksPage() {
     {
       step: '03',
       title: 'AI Fingerprinting',
-      desc: 'Our AI Engine (Google Gemini) deeply analyzes the image. It extracts the art style, dominant colors, and structural composition—creating a unique "Semantic Fingerprint" to detect future plagiarism.',
+      desc: 'Our AI Engine (Google Gemini) deeply analyzes the image. It extracts the art style, dominant colors, and structural composition-creating a unique "Semantic Fingerprint" to detect future plagiarism.',
       gradient: 'from-purple-500/20 to-transparent',
       iconColor: 'text-purple-400',
       borderColor: 'group-hover:border-purple-500/50',
