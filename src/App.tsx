@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import Lenis from 'lenis';
+import 'lenis/dist/lenis.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import LandingPage from './pages/Landing';
@@ -8,6 +11,16 @@ import HowItWorksPage from './pages/HowItWorks';
 import { AuthProvider } from './contexts/AuthProvider';
 
 export default function App() {
+  useEffect(() => {
+    const lenis = new Lenis({
+      autoRaf: true,
+    });
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
   return (
     <AuthProvider>
       <BrowserRouter>

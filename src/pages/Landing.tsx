@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, ChevronDown, Check, X, AlertTriangle } from 'lucide-react';
+import { ShieldCheck, ChevronDown, Check, X, AlertTriangle, Cpu, Globe, Database, Upload, FileCheck } from 'lucide-react';
 import { cn } from '../lib/utils';
+
+import BackgroundGlow from '../components/BackgroundGlow';
 
 export default function LandingPage() {
   const { scrollYProgress } = useScroll();
@@ -32,7 +34,8 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-obsidian text-white selection:bg-neon-green selection:text-black overflow-hidden font-sans">
+    <div className="min-h-screen bg-obsidian text-white selection:bg-neon-green selection:text-black overflow-hidden font-sans relative">
+      <BackgroundGlow />
       {/* 1. The Hero */}
       <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-32 px-4 overflow-hidden">
         {/* Background ambient glow */}
@@ -157,8 +160,11 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* NEW SECTION: Tech Demo */}
+      <TechDemoSection />
+
       {/* 4. The Comparison Matrix */}
-      <section className="py-24 px-4 bg-gradient-to-b from-transparent to-black/80 relative z-10">
+      <section className="py-24 px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">The Evolution of Protection</h2>
@@ -399,6 +405,320 @@ function FaqItem({ question, answer, isOpen, onToggle }: { question: string, ans
       >
         {answer}
       </div>
+    </div>
+  );
+}
+
+function TechDemoSection() {
+  return (
+    <section className="py-24 px-4 relative z-10">
+      <div className="max-w-6xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 text-white">Powering the Next Wave of Evolution</h2>
+          <p className="text-slate-400 max-w-2xl mx-auto">U_Design's hybrid architecture combines the intelligence of AI with the immutability of decentralized networks.</p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+        >
+          <WorkflowDemo />
+        </motion.div>
+        
+        <WorkflowPhasesGrid />
+      </div>
+    </section>
+  );
+}
+
+function WorkflowDemo() {
+  const steps = [
+    { title: "Data Initiation", desc: "Drop & Read", icon: <Upload className="w-5 h-5" /> },
+    { title: "Immutable Storage", desc: "IPFS & Pinata", icon: <Globe className="w-5 h-5" /> },
+    { title: "AI Fingerprint", desc: "Google Gemini", icon: <Cpu className="w-5 h-5" /> },
+    { title: "Copyright Seal", desc: "Firestore Ledger", icon: <Database className="w-5 h-5" /> },
+    { title: "Certificate Render", desc: "Verification", icon: <FileCheck className="w-5 h-5" /> },
+  ];
+
+  // Helper for synchronized looping keyframes (5s total duration)
+  const DURATION = 5.0;
+  const getTimes = (i: number) => {
+    const onStart = (i * 0.6) / DURATION;
+    const onPeak = onStart + 0.08;
+    const offStart = onPeak + 0.28;
+    const offEnd = offStart + 0.08;
+    return [0, onStart, onPeak, offStart, offEnd, 1];
+  };
+
+  return (
+    <motion.div 
+      initial="rest" 
+      whileHover="hover" 
+      className="glass p-8 md:p-12 rounded-3xl relative overflow-hidden flex flex-col group border border-transparent hover:border-neon-green/30 transition-all duration-500 cursor-pointer bg-black/40 hover:bg-black/60 shadow-none hover:shadow-[0_0_40px_rgba(0,255,163,0.15)] min-h-[400px]"
+    >
+      <div className="relative z-20 mb-16 md:mb-24">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-neon-green group-hover:scale-110 group-hover:bg-neon-green/10 transition-all duration-300">
+            <ShieldCheck className="w-6 h-6" />
+          </div>
+          <h3 className="text-3xl font-bold text-white">The Protection Workflow</h3>
+        </div>
+        <p className="text-slate-400 text-lg leading-relaxed max-w-3xl">
+          From the moment you upload your artwork, it passes through 5 stages of cryptographic and semantic processing to ensure absolute, immutable copyright protection.
+        </p>
+      </div>
+
+      {/* Interactive Visual Network */}
+      <div className="relative w-full h-[150px] flex items-center justify-between px-4 sm:px-12 mt-auto">
+         {/* Main Connecting Line (Idle) */}
+         <div className="absolute top-1/2 left-8 right-8 h-0.5 bg-white/10 -translate-y-1/2" />
+         
+         {/* Highlighted Connecting Line (Animates on hover) */}
+         <motion.div 
+            variants={{ 
+              rest: { scaleX: 0, opacity: 0, transition: { duration: 0.3 } }, 
+              hover: { 
+                scaleX: [0, 1, 1, 1, 0],
+                opacity: [0, 1, 1, 0, 0],
+                transition: { duration: DURATION, times: [0, 0.48, 0.92, 0.98, 1], ease: "easeInOut", repeat: Infinity }
+              } 
+            }}
+            className="absolute top-1/2 left-8 right-8 h-0.5 bg-neon-green -translate-y-1/2 origin-left"
+         />
+         
+         {/* Nodes */}
+         {steps.map((step, i) => (
+            <div key={i} className="relative z-10 flex flex-col items-center group/node">
+               {/* Label above */}
+               <motion.div 
+                 variants={{ 
+                   rest: { opacity: 0, y: 10, transition: { duration: 0.3 } }, 
+                   hover: { 
+                     opacity: [0, 0, 1, 1, 0, 0], 
+                     y: [10, 10, 0, 0, 10, 10],
+                     transition: { duration: DURATION, times: getTimes(i), repeat: Infinity }
+                   } 
+                 }}
+                 className="absolute -top-16 w-32 text-center pointer-events-none"
+               >
+                 <div className="text-neon-green font-bold text-[10px] uppercase tracking-widest mb-1">Phase {i + 1}</div>
+                 <div className="text-white text-xs font-mono leading-tight">{step.desc}</div>
+               </motion.div>
+
+               {/* Diamond Node */}
+               <motion.div 
+                 variants={{ 
+                   rest: { scale: 1, backgroundColor: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.1)', boxShadow: '0 0 0px rgba(0,0,0,0)', transition: { duration: 0.3 } }, 
+                   hover: { 
+                     scale: [1, 1, 1.2, 1.2, 1, 1], 
+                     backgroundColor: [
+                       'rgba(255,255,255,0.05)', 'rgba(255,255,255,0.05)', 
+                       'rgba(0,255,163,0.15)', 'rgba(0,255,163,0.15)', 
+                       'rgba(255,255,255,0.05)', 'rgba(255,255,255,0.05)'
+                     ],
+                     borderColor: [
+                       'rgba(255,255,255,0.1)', 'rgba(255,255,255,0.1)', 
+                       'rgba(0,255,163,0.5)', 'rgba(0,255,163,0.5)', 
+                       'rgba(255,255,255,0.1)', 'rgba(255,255,255,0.1)'
+                     ],
+                     boxShadow: [
+                       '0 0 0px rgba(0,0,0,0)', '0 0 0px rgba(0,0,0,0)', 
+                       '0 0 20px rgba(0,255,163,0.4)', '0 0 20px rgba(0,255,163,0.4)', 
+                       '0 0 0px rgba(0,0,0,0)', '0 0 0px rgba(0,0,0,0)'
+                     ],
+                     transition: { duration: DURATION, times: getTimes(i), repeat: Infinity }
+                   } 
+                 }}
+                 className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl rotate-45 backdrop-blur-md flex items-center justify-center border-2"
+               >
+                  <motion.div 
+                    variants={{ 
+                      rest: { rotate: -45, color: '#94a3b8', transition: { duration: 0.3 } }, 
+                      hover: { 
+                        rotate: -45, 
+                        color: ['#94a3b8', '#94a3b8', '#00FFA3', '#00FFA3', '#94a3b8', '#94a3b8'],
+                        transition: { duration: DURATION, times: getTimes(i), repeat: Infinity }
+                      } 
+                    }}
+                  >
+                     {step.icon}
+                  </motion.div>
+               </motion.div>
+
+               {/* Glowing dot in center */}
+               <motion.div 
+                 variants={{ 
+                   rest: { scale: 0, opacity: 0, transition: { duration: 0.3 } }, 
+                   hover: { 
+                     scale: [0, 0, 1, 1, 0, 0], 
+                     opacity: [0, 0, 1, 1, 0, 0],
+                     transition: { duration: DURATION, times: getTimes(i), repeat: Infinity }
+                   } 
+                 }}
+                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-[0_0_10px_white]"
+               />
+            </div>
+         ))}
+
+         {/* Data particle (Shoots across the line) */}
+         <motion.div 
+            variants={{ 
+              rest: { left: "0%", opacity: 0, transition: { duration: 0.3 } }, 
+              hover: { 
+                left: ["0%", "100%", "100%", "0%"], 
+                opacity: [0, 1, 0, 0],
+                transition: { duration: DURATION, times: [0, 0.48, 0.58, 1], ease: "easeInOut", repeat: Infinity }
+              } 
+            }}
+            className="absolute top-1/2 -translate-y-1/2 w-12 h-1 bg-white blur-[2px] rounded-full z-20 shadow-[0_0_15px_white]"
+         />
+      </div>
+    </motion.div>
+  );
+}
+
+function WorkflowPhasesGrid() {
+  const phaseDetails = [
+    {
+      phase: "Phase 1",
+      title: "Data Initiation",
+      desc: "Securely input and parse metadata from your source files before processing.",
+      icon: <Upload className="w-5 h-5" />,
+      colSpan: "lg:col-span-2",
+      graphic: (
+        <div className="relative w-full h-full flex flex-col items-center justify-center pt-4">
+           <motion.div variants={{ rest: { y: -10, opacity: 0, transition: { duration: 0.3 } }, hover: { y: 10, opacity: 1, transition: { duration: 1.5, repeat: Infinity } } }} className="w-1 h-4 bg-neon-green rounded-full mb-1 shadow-[0_0_8px_#00FFA3]" />
+           <motion.div variants={{ rest: { scale: 0.9, borderColor: 'rgba(255,255,255,0.1)', transition: { duration: 0.3 } }, hover: { scale: 1, borderColor: 'rgba(0,255,163,0.5)', transition: { duration: 0.4 } } }} className="w-16 h-8 border-2 rounded-lg border-t-0 flex items-end justify-center pb-1">
+             <div className="w-8 h-1 bg-white/20 rounded-full" />
+           </motion.div>
+        </div>
+      )
+    },
+    {
+      phase: "Phase 2",
+      title: "Immutable Storage",
+      desc: "Decentralized, censorship-resistant storage ensuring your data is never lost.",
+      icon: <Globe className="w-5 h-5" />,
+      colSpan: "lg:col-span-2",
+      graphic: (
+        <div className="relative w-full h-full flex items-center justify-center gap-3">
+           {[0,1,2].map((n) => (
+             <motion.div key={n} variants={{ rest: { scale: 0.5, opacity: 0.5, transition: { duration: 0.3 } }, hover: { scale: [0.5, 1, 0.5], opacity: [0.5, 1, 0.5], transition: { duration: 2, delay: n * 0.3, repeat: Infinity } } }} className="w-3 h-3 rounded-full border border-neon-green bg-neon-green/20 relative z-10" />
+           ))}
+           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-px bg-gradient-to-r from-transparent via-neon-green/50 to-transparent" />
+        </div>
+      )
+    },
+    {
+      phase: "Phase 3",
+      title: "AI Fingerprint",
+      desc: "Advanced semantic hashing and feature extraction to detect modifications.",
+      icon: <Cpu className="w-5 h-5" />,
+      colSpan: "lg:col-span-2",
+      graphic: (
+        <div className="relative w-full h-full flex items-center justify-center">
+           <motion.div variants={{ rest: { scale: 0.8, opacity: 0.5, transition: { duration: 0.3 } }, hover: { scale: [0.8, 1.5, 0.8], opacity: [0.5, 0, 0.5], transition: { duration: 1.5, repeat: Infinity } } }} className="absolute w-10 h-10 rounded-lg border border-neon-green" />
+           <div className="w-8 h-8 bg-black border border-white/20 rounded-md z-10 flex items-center justify-center">
+              <div className="w-2 h-2 bg-neon-green rounded-full shadow-[0_0_10px_#00FFA3]" />
+           </div>
+        </div>
+      )
+    },
+    {
+      phase: "Phase 4",
+      title: "Copyright Seal",
+      desc: "Permanent timestamping and cryptographic logging of your asset's identity.",
+      icon: <Database className="w-5 h-5" />,
+      colSpan: "lg:col-span-3",
+      graphic: (
+        <div className="relative w-full h-full flex flex-col items-center justify-center gap-2">
+           {[0,1,2].map((n) => (
+             <motion.div key={n} variants={{ rest: { x: 0, transition: { duration: 0.3 } }, hover: { x: n % 2 === 0 ? [0, 4, 0] : [0, -4, 0], transition: { duration: 2, delay: n * 0.2, repeat: Infinity } } }} className="w-16 h-3 border border-white/20 rounded bg-black/50 flex items-center px-1">
+                <div className={`w-1 h-1 rounded-full ${n === 1 ? 'bg-neon-green shadow-[0_0_5px_#00FFA3]' : 'bg-white/30'}`} />
+             </motion.div>
+           ))}
+        </div>
+      )
+    },
+    {
+      phase: "Phase 5",
+      title: "Certificate Render",
+      desc: "Cryptographically verifiable certificates ready to be shared or minted.",
+      icon: <FileCheck className="w-5 h-5" />,
+      colSpan: "lg:col-span-3",
+      graphic: (
+        <div className="relative w-full h-full flex items-center justify-center">
+           {[0,1,2].map((n) => (
+             <motion.div key={n} variants={{ rest: { scale: 0, opacity: 0, transition: { duration: 0.3 } }, hover: { scale: [0, 2], opacity: [0.8, 0], transition: { duration: 2, delay: n * 0.4, repeat: Infinity } } }} className="absolute w-8 h-8 rounded-full border border-neon-green" />
+           ))}
+           <div className="w-6 h-6 bg-black border-2 border-neon-green rounded-full z-10 shadow-[0_0_15px_rgba(0,255,163,0.5)]" />
+        </div>
+      )
+    }
+  ];
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mt-6">
+      {phaseDetails.map((item, idx) => (
+        <motion.div
+          key={idx}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, margin: "-50px" }}
+          transition={{ duration: 0.6, delay: idx * 0.15 }}
+          className={item.colSpan}
+        >
+          <motion.div
+            initial="rest"
+            whileHover="hover"
+            className="glass pt-8 px-8 flex flex-col group border border-transparent hover:border-neon-green/30 transition-all duration-500 cursor-pointer bg-black/40 hover:bg-black/60 shadow-none hover:shadow-[0_0_30px_rgba(0,255,163,0.1)] relative overflow-hidden min-h-[280px] rounded-3xl h-full"
+          >
+          {/* Subtle background glow on hover */}
+          <motion.div 
+            variants={{ rest: { opacity: 0 }, hover: { opacity: 1 } }}
+            transition={{ duration: 0.3 }}
+            className="absolute top-0 right-0 w-32 h-32 bg-neon-green/5 blur-3xl rounded-full pointer-events-none"
+          />
+
+          <div className="flex items-center gap-4 mb-4 relative z-10">
+             <motion.div 
+               variants={{
+                 rest: { scale: 1, color: '#94a3b8', backgroundColor: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.1)' },
+                 hover: { scale: 1.1, color: '#00FFA3', backgroundColor: 'rgba(0,255,163,0.15)', borderColor: 'rgba(0,255,163,0.5)' }
+               }}
+               transition={{ duration: 0.3 }}
+               className="w-12 h-12 rounded-xl flex items-center justify-center border transition-colors shrink-0"
+             >
+               {item.icon}
+             </motion.div>
+             <div>
+               <div className="text-neon-green font-bold text-[10px] uppercase tracking-widest mb-1">{item.phase}</div>
+               <h4 className="text-xl font-bold text-white leading-tight">{item.title}</h4>
+             </div>
+          </div>
+          
+          <p className="text-slate-400 text-sm leading-relaxed mb-6 relative z-10 flex-grow">
+            {item.desc}
+          </p>
+
+          {/* Abstract visual representation at bottom */}
+          <div className="w-[calc(100%+4rem)] h-28 border-t border-white/5 relative flex items-center justify-center mt-auto -mx-8 overflow-hidden pointer-events-none">
+             {/* Subtle Grid Background inside graphic area */}
+             <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)] bg-[size:12px_12px] [mask-image:linear-gradient(to_bottom,transparent,black)]"></div>
+             
+             {item.graphic}
+          </div>
+          </motion.div>
+        </motion.div>
+      ))}
     </div>
   );
 }

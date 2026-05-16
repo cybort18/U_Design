@@ -93,6 +93,8 @@ function AuthWidget() {
   );
 }
 
+import BackgroundGlow from './BackgroundGlow';
+
 export default function Layout() {
   const location = useLocation();
   const outlet = useOutlet();
@@ -106,7 +108,8 @@ export default function Layout() {
   ];
 
   return (
-    <div className="w-full min-h-screen flex bg-obsidian text-white font-sans overflow-hidden">
+    <div className="w-full min-h-screen flex bg-obsidian text-white font-sans relative">
+      <BackgroundGlow />
       
       {/* Mobile Sidebar Overlay */}
       <AnimatePresence>
@@ -124,7 +127,7 @@ export default function Layout() {
       {/* Sidebar Navigation */}
       <motion.aside 
         className={cn(
-          "fixed lg:static inset-y-0 left-0 z-50 w-64 glass border-r border-white/10 flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0 bg-obsidian/80",
+          "fixed lg:sticky top-0 h-screen inset-y-0 left-0 z-50 w-64 glass border-r border-white/10 flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0 bg-obsidian/80",
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
@@ -175,9 +178,9 @@ export default function Layout() {
       </motion.aside>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col h-screen overflow-hidden relative">
+      <div className="flex-1 flex flex-col min-h-screen relative w-full lg:w-[calc(100%-16rem)]">
         {/* Mobile Header */}
-        <header className="lg:hidden flex items-center justify-between p-4 border-b border-white/10 bg-obsidian/80 backdrop-blur-md z-30">
+        <header className="lg:hidden sticky top-0 flex items-center justify-between p-4 border-b border-white/10 bg-obsidian/80 backdrop-blur-md z-30">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 bg-gradient-to-br from-neon-green/20 to-transparent border border-neon-green/30 rounded-md flex items-center justify-center">
               <ShieldCheck className="w-4 h-4 text-neon-green" />
@@ -193,7 +196,7 @@ export default function Layout() {
         </header>
 
         {/* Dynamic Canvas */}
-        <main className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8 w-full">
           <div className="max-w-6xl mx-auto w-full">
             <AnimatePresence mode="wait">
               <motion.div

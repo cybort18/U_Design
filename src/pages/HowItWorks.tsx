@@ -1,47 +1,57 @@
 import { motion } from 'motion/react';
-import { Fingerprint, Network, ShieldCheck, Scale, Cpu, Database } from 'lucide-react';
+import { Upload, Globe, Cpu, Database, FileCheck } from 'lucide-react';
 
 export default function HowItWorksPage() {
   const steps = [
     {
       step: '01',
-      title: 'AI Semantic Fingerprinting',
-      desc: 'When you upload an artwork, our AI Engine deeply analyzes the image. It extracts the art style, dominant colors, and structural composition-creating a unique "Semantic Fingerprint" that acts as your definitive copyright claim.',
+      title: 'Data Initiation',
+      desc: 'When you drop your artwork, our system initiates a secure session. It parses local metadata and prepares the raw file for distributed processing, ensuring absolute privacy from the first byte.',
       gradient: 'from-blue-500/20 to-transparent',
       iconColor: 'text-blue-400',
       borderColor: 'group-hover:border-blue-500/50',
       glow: 'group-hover:shadow-[0_0_30px_rgba(59,130,246,0.15)]',
-      Icon: Fingerprint
+      Icon: Upload
     },
     {
       step: '02',
-      title: 'IPFS Immutable Storage',
-      desc: 'We store your original file directly on the InterPlanetary File System (IPFS). Unlike regular centralized servers, IPFS is a decentralized peer-to-peer network. Your image is mathematically hashed into a CID that can never be destroyed or altered.',
+      title: 'Immutable Storage',
+      desc: 'We store your original file directly on the InterPlanetary File System (IPFS) via Pinata. Your image is mathematically hashed into a CID (Content Identifier) that acts as a permanent, unbreakable link.',
       gradient: 'from-emerald-500/20 to-transparent',
       iconColor: 'text-emerald-400',
       borderColor: 'group-hover:border-emerald-500/50',
       glow: 'group-hover:shadow-[0_0_30px_rgba(16,185,129,0.15)]',
-      Icon: Network
+      Icon: Globe
     },
     {
       step: '03',
-      title: 'Certificate Generation',
-      desc: 'You immediately receive a digital Certificate of Authenticity. It cryptographically binds the AI Fingerprint metadata to the IPFS CID and the exact timestamp of creation to establish provenance and priority of original possession.',
+      title: 'AI Fingerprinting',
+      desc: 'Our AI Engine (Google Gemini) deeply analyzes the image. It extracts the art style, dominant colors, and structural composition—creating a unique "Semantic Fingerprint" to detect future plagiarism.',
       gradient: 'from-purple-500/20 to-transparent',
       iconColor: 'text-purple-400',
       borderColor: 'group-hover:border-purple-500/50',
       glow: 'group-hover:shadow-[0_0_30px_rgba(168,85,247,0.15)]',
-      Icon: ShieldCheck
+      Icon: Cpu
     },
     {
       step: '04',
-      title: 'Dispute Resolution Protocol',
-      desc: 'If someone claims your art as theirs, simply present your Certificate or enter the CID into the Verify system. Because the IPFS ledger is immutable and permanently time-stamped, it provides irrefutable mathematical proof of ownership.',
+      title: 'Copyright Seal',
+      desc: 'The IPFS CID and AI Fingerprint are permanently logged into a Firestore cryptographic ledger. This creates an immutable timestamped record establishing your absolute priority of possession.',
       gradient: 'from-rose-500/20 to-transparent',
       iconColor: 'text-rose-400',
       borderColor: 'group-hover:border-rose-500/50',
       glow: 'group-hover:shadow-[0_0_30px_rgba(244,63,94,0.15)]',
-      Icon: Scale
+      Icon: Database
+    },
+    {
+      step: '05',
+      title: 'Certificate Render',
+      desc: 'You immediately receive a digital Certificate of Authenticity. This document cryptographically binds all metadata together, providing irrefutable mathematical proof of your copyright.',
+      gradient: 'from-amber-500/20 to-transparent',
+      iconColor: 'text-amber-400',
+      borderColor: 'group-hover:border-amber-500/50',
+      glow: 'group-hover:shadow-[0_0_30px_rgba(251,191,36,0.15)]',
+      Icon: FileCheck
     }
   ];
 
@@ -93,7 +103,7 @@ export default function HowItWorksPage() {
           <motion.div 
             key={i} 
             variants={itemVariants}
-            className={`glass-card p-8 group relative overflow-hidden transition-all duration-500 border border-white/5 ${item.borderColor} ${item.glow}`}
+            className={`glass-card p-8 group relative overflow-hidden transition-all duration-500 border border-white/5 ${item.borderColor} ${item.glow} ${i === 4 ? 'md:col-span-2' : ''}`}
           >
             {/* Ambient Gradient Background */}
             <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`}></div>
