@@ -176,15 +176,30 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false }}
               transition={{ duration: 0.6 }}
-              className="glass p-8 rounded-2xl relative overflow-hidden flex flex-col border border-transparent hover:border-neon-green/50 hover:shadow-[0_0_15px_rgba(0,255,163,0.2)] transition-all duration-300"
+              className="glass p-8 rounded-3xl relative overflow-hidden flex flex-col border border-white/5 hover:border-red-500/30 hover:shadow-[0_10px_40px_rgba(239,68,68,0.1)] hover:-translate-y-2 transition-all duration-300 ease-out group bg-gradient-to-b from-white/5 to-transparent"
             >
-              <div className="absolute top-0 left-0 w-full h-1 bg-red-500"></div>
-              <h3 className="text-2xl font-bold mb-2">Web2 <span className="text-slate-400 font-normal text-lg">(Traditional)</span></h3>
-              <p className="text-slate-400 mb-8 text-sm">Highly vulnerable, centralized servers.</p>
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500/0 via-red-500/50 to-red-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="w-12 h-12 rounded-2xl bg-red-500/10 flex items-center justify-center mb-6 border border-red-500/20 group-hover:scale-110 transition-transform duration-300">
+                <Database className="text-red-500 w-6 h-6" />
+              </div>
+
+              <h3 className="text-2xl font-bold mb-1">Web2 <span className="text-slate-500 font-normal text-lg">(Traditional)</span></h3>
+              <p className="text-slate-400 mb-8 text-sm h-10">Highly vulnerable, centralized servers owned by corporations.</p>
+              
               <ul className="space-y-4 flex-grow text-slate-300">
-                <li className="flex items-start gap-3"><X className="w-5 h-5 text-red-500 shrink-0 mt-0.5" /> Easily downloaded & stolen</li>
-                <li className="flex items-start gap-3"><X className="w-5 h-5 text-red-500 shrink-0 mt-0.5" /> Single point of failure</li>
-                <li className="flex items-start gap-3"><X className="w-5 h-5 text-red-500 shrink-0 mt-0.5" /> Platform controls your copyright</li>
+                <li className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-red-500/10 flex items-center justify-center shrink-0 mt-0.5"><X className="w-3.5 h-3.5 text-red-500" /></span> 
+                  <span className="text-sm">Easily downloaded & stolen</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-red-500/10 flex items-center justify-center shrink-0 mt-0.5"><X className="w-3.5 h-3.5 text-red-500" /></span> 
+                  <span className="text-sm">Single point of failure</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-red-500/10 flex items-center justify-center shrink-0 mt-0.5"><X className="w-3.5 h-3.5 text-red-500" /></span> 
+                  <span className="text-sm">Platform controls your copyright</span>
+                </li>
               </ul>
             </motion.div>
 
@@ -194,15 +209,30 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="glass p-8 rounded-2xl relative overflow-hidden flex flex-col border border-transparent hover:border-neon-green/50 hover:shadow-[0_0_15px_rgba(0,255,163,0.2)] transition-all duration-300"
+              className="glass p-8 rounded-3xl relative overflow-hidden flex flex-col border border-white/5 hover:border-yellow-500/30 hover:shadow-[0_10px_40px_rgba(234,179,8,0.1)] hover:-translate-y-2 transition-all duration-300 ease-out group bg-gradient-to-b from-white/5 to-transparent"
             >
-              <div className="absolute top-0 left-0 w-full h-1 bg-yellow-500"></div>
-              <h3 className="text-2xl font-bold mb-2">Web3 <span className="text-slate-400 font-normal text-lg">(Pure NFT)</span></h3>
-              <p className="text-slate-400 mb-8 text-sm">High security, high friction.</p>
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500/0 via-yellow-500/50 to-yellow-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="w-12 h-12 rounded-2xl bg-yellow-500/10 flex items-center justify-center mb-6 border border-yellow-500/20 group-hover:scale-110 transition-transform duration-300">
+                <Globe className="text-yellow-500 w-6 h-6" />
+              </div>
+
+              <h3 className="text-2xl font-bold mb-1">Web3 <span className="text-slate-500 font-normal text-lg">(Pure NFT)</span></h3>
+              <p className="text-slate-400 mb-8 text-sm h-10">High security, but massive friction for non-crypto users.</p>
+              
               <ul className="space-y-4 flex-grow text-slate-300">
-                <li className="flex items-start gap-3"><AlertTriangle className="w-5 h-5 text-yellow-500 shrink-0 mt-0.5" /> Requires Crypto Wallets</li>
-                <li className="flex items-start gap-3"><AlertTriangle className="w-5 h-5 text-yellow-500 shrink-0 mt-0.5" /> High gas fees to mint</li>
-                <li className="flex items-start gap-3"><Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" /> Immutable storage</li>
+                <li className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-yellow-500/10 flex items-center justify-center shrink-0 mt-0.5"><AlertTriangle className="w-3.5 h-3.5 text-yellow-500" /></span> 
+                  <span className="text-sm">Requires Crypto Wallets</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-yellow-500/10 flex items-center justify-center shrink-0 mt-0.5"><AlertTriangle className="w-3.5 h-3.5 text-yellow-500" /></span> 
+                  <span className="text-sm">High gas fees to mint</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0 mt-0.5"><Check className="w-3.5 h-3.5 text-emerald-500" /></span> 
+                  <span className="text-sm">Immutable IPFS storage</span>
+                </li>
               </ul>
             </motion.div>
 
@@ -212,15 +242,31 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="bg-white/10 backdrop-blur-xl p-8 rounded-2xl relative overflow-hidden flex flex-col border border-neon-green/50 shadow-[0_0_30px_rgba(0,255,163,0.15)] hover:border-neon-green hover:shadow-[0_0_40px_rgba(0,255,163,0.3)] transition-all duration-300"
+              className="bg-obsidian/60 backdrop-blur-2xl p-8 rounded-3xl relative overflow-hidden flex flex-col border border-neon-green/40 shadow-[0_15px_50px_rgba(0,255,163,0.15)] hover:border-neon-green hover:shadow-[0_20px_60px_rgba(0,255,163,0.3)] hover:-translate-y-2 transition-all duration-500 ease-out group"
             >
-              <div className="absolute top-0 left-0 w-full h-1 bg-neon-green shadow-[0_0_10px_rgba(0,255,163,0.8)]"></div>
-              <h3 className="text-2xl font-bold mb-2 text-white">Web2.5 <span className="text-neon-green font-normal text-lg">(U_Design)</span></h3>
-              <p className="text-slate-300 mb-8 text-sm">Best of both worlds. Zero friction.</p>
-              <ul className="space-y-4 flex-grow text-white">
-                <li className="flex items-start gap-3"><Check className="w-5 h-5 text-neon-green shrink-0 mt-0.5" /> 100% IPFS Immutable</li>
-                <li className="flex items-start gap-3"><Check className="w-5 h-5 text-neon-green shrink-0 mt-0.5" /> Google AI Fingerprinting</li>
-                <li className="flex items-start gap-3"><Check className="w-5 h-5 text-neon-green shrink-0 mt-0.5" /> Free & No Wallet Required</li>
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-neon-green/0 via-neon-green to-neon-green/0 shadow-[0_0_15px_rgba(0,255,163,1)]"></div>
+              <div className="absolute -top-24 -right-24 w-48 h-48 bg-neon-green/20 rounded-full blur-[60px] group-hover:bg-neon-green/30 transition-all duration-500"></div>
+              
+              <div className="relative z-10 w-14 h-14 rounded-2xl bg-gradient-to-br from-neon-green/20 to-transparent flex items-center justify-center mb-5 border border-neon-green/40 shadow-[0_0_20px_rgba(0,255,163,0.2)] group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(0,255,163,0.4)] transition-all duration-300">
+                <ShieldCheck className="text-neon-green w-7 h-7" />
+              </div>
+
+              <h3 className="relative z-10 text-3xl font-bold mb-1 text-white">Web2.5 <span className="text-neon-green font-normal text-xl">(U_Design)</span></h3>
+              <p className="relative z-10 text-slate-300 mb-8 text-sm font-medium h-10">Best of both worlds. Zero friction. Absolute security.</p>
+              
+              <ul className="relative z-10 space-y-4 flex-grow text-white">
+                <li className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-neon-green/20 flex items-center justify-center shrink-0 mt-0.5"><Check className="w-3.5 h-3.5 text-neon-green" /></span> 
+                  <span className="text-sm font-medium">100% IPFS Immutable</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-neon-green/20 flex items-center justify-center shrink-0 mt-0.5"><Check className="w-3.5 h-3.5 text-neon-green" /></span> 
+                  <span className="text-sm font-medium">Google AI Fingerprinting</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-neon-green/20 flex items-center justify-center shrink-0 mt-0.5"><Check className="w-3.5 h-3.5 text-neon-green" /></span> 
+                  <span className="text-sm font-medium">Free & No Wallet Required</span>
+                </li>
               </ul>
             </motion.div>
           </div>
