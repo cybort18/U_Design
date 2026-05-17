@@ -4,7 +4,7 @@
   <br />
   <br />
   
-  **The Next Generation of Intellectual Property (IP) Protection**<br />
+  **Immortalize Your Digital Identity.**<br />
   <i>Empowering Digital Creators with AI Semantic Fingerprinting and Decentralized IPFS Vaults</i>
 
   <br />
@@ -27,12 +27,12 @@ By combining the immutability of decentralized storage with advanced artificial 
 
 ## ✨ Key Features
 
-- 🛡️ **Global Anti-Plagiarism Detection**: Uses strict global hashing checks across the entire platform. If an artwork's hash is already claimed, the system outright blocks any attempts of duplication.
-- 🧊 **Immutable Decentralized Storage**: Artworks are securely pinned to the IPFS network via **Pinata**, guaranteeing that the original source files are preserved forever without the risk of centralized server tampering.
-- 🧠 **AI Semantic Fingerprinting**: Powered by **Google Gemini 2.5 Flash**, the system generates a unique "Semantic Fingerprint" for every uploaded artwork. It intelligently detects the core art style, dominant color palettes, main objects, and generates a sophisticated copyright description.
-- 🔐 **Secure Digital Vault**: Integrated with **Firebase Firestore & Authentication**, creators have a private, secure dashboard to manage and review all their protected assets.
-- 📜 **Certificate of Authenticity**: Generates a downloadable, highly detailed cryptographic digital certificate showcasing the IPFS Content ID (CID), timestamp, AI Fingerprint data, and dynamic Creator credentials.
-- 🌐 **Global Authenticity Verification**: Anyone can verify an artwork's authenticity simply by querying its IPFS CID within the platform's verification engine.
+- **Global Anti-Plagiarism Detection**: Uses strict global hashing checks across the entire platform. If an artwork's hash is already claimed, the system outright blocks any attempts of duplication.
+- **Immutable Decentralized Storage**: Artworks are securely pinned to the IPFS network via **Pinata**, guaranteeing that the original source files are preserved forever without the risk of centralized server tampering.
+- **AI Semantic Fingerprinting**: Powered by **Google Gemini 2.5 Flash**, the system generates a unique "Semantic Fingerprint" for every uploaded artwork. It intelligently detects the core art style, dominant color palettes, main objects, and generates a sophisticated copyright description.
+- **Secure Digital Vault**: Integrated with **Firebase Firestore & Authentication**, creators have a private, secure dashboard to manage and review all their protected assets.
+- **Certificate of Authenticity**: Generates a downloadable, highly detailed cryptographic digital certificate showcasing the IPFS Content ID (CID), timestamp, AI Fingerprint data, and dynamic Creator credentials.
+- **Global Authenticity Verification**: Anyone can verify an artwork's authenticity simply by querying its IPFS CID within the platform's verification engine.
 
 ## 🛠 Tech Stack
 
