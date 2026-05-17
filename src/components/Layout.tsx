@@ -133,10 +133,8 @@ export default function Layout() {
       >
         <div className="p-6 border-b border-white/10 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-8 h-8 bg-gradient-to-br from-neon-green/20 to-transparent border border-neon-green/30 rounded-lg flex items-center justify-center shadow-[0_0_10px_rgba(0,255,163,0.3)]">
-              <ShieldCheck className="w-5 h-5 text-neon-green" />
-            </div>
-            <h1 className="text-xl tracking-tighter font-bold text-white"><span className="text-neon-green">U_</span>DESIGN</h1>
+            <img src="/logo-company.svg" alt="Company" className="w-9 h-9 object-contain rounded-lg shadow-[0_0_10px_rgba(0,255,163,0.2)]" />
+            <img src="/logo-udesign.svg" alt="U_Design" className="h-5 object-contain" />
           </Link>
           <button className="lg:hidden text-slate-400 hover:text-white cursor-pointer" onClick={() => setSidebarOpen(false)}>
             <X className="w-6 h-6" />
@@ -182,10 +180,8 @@ export default function Layout() {
         {/* Mobile Header */}
         <header className="lg:hidden sticky top-0 flex items-center justify-between p-4 border-b border-white/10 bg-obsidian/80 backdrop-blur-md z-30">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-gradient-to-br from-neon-green/20 to-transparent border border-neon-green/30 rounded-md flex items-center justify-center">
-              <ShieldCheck className="w-4 h-4 text-neon-green" />
-            </div>
-            <h1 className="text-lg tracking-tighter font-bold text-white"><span className="text-neon-green">U_</span>DESIGN</h1>
+            <img src="/logo-company.svg" alt="Company" className="w-7 h-7 object-contain rounded-md shadow-[0_0_10px_rgba(0,255,163,0.2)]" />
+            <img src="/logo-udesign.svg" alt="U_Design" className="h-4 object-contain" />
           </div>
           <button 
             onClick={() => setSidebarOpen(true)}

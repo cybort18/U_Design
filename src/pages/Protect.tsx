@@ -609,8 +609,9 @@ export default function ProtectPage() {
                     </span>
                     VERIFICATION SECURED
                   </div>
-                  <div className="text-2xl font-display font-black tracking-tighter text-white opacity-10 select-none">
-                    U_Design
+                  <div className="opacity-15 select-none flex items-center gap-2 grayscale pointer-events-none">
+                    <img src="/logo-company.svg" alt="Company" className="w-6 h-6 object-contain" />
+                    <img src="/logo-udesign.svg" alt="U_Design" className="h-4 object-contain" />
                   </div>
                 </div>
 

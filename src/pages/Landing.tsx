@@ -44,10 +44,8 @@ export default function LandingPage() {
 
         {/* Top left Logo */}
         <div className="absolute top-8 left-8 flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-neon-green/20 to-transparent border border-neon-green/30 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(0,255,163,0.3)]">
-            <ShieldCheck className="w-6 h-6 text-neon-green" />
-          </div>
-          <span className="text-xl tracking-tighter font-bold text-white"><span className="text-neon-green">U_</span>DESIGN</span>
+          <img src="/logo-company.svg" alt="Company" className="w-11 h-11 object-contain rounded-xl shadow-[0_0_15px_rgba(0,255,163,0.2)]" />
+          <img src="/logo-udesign.svg" alt="U_Design" className="h-6 object-contain" />
         </div>
 
         <motion.div 
@@ -289,7 +287,7 @@ export default function LandingPage() {
           <div className="w-[300px] sm:w-[500px] h-auto p-1 bg-gradient-to-br from-neon-green/40 to-transparent rounded-2xl transform rotate-12 hover:rotate-6 transition-all duration-500 shadow-[0_0_50px_rgba(0,255,163,0.2)]">
             <div className="bg-obsidian border border-neon-green/20 rounded-xl p-6 h-full w-full">
               <div className="flex justify-between items-start mb-8">
-                <ShieldCheck className="w-8 h-8 text-neon-green" />
+                <img src="/logo-company.svg" alt="Company Logo" className="w-8 h-8 object-contain" />
                 <div className="text-right">
                   <div className="text-[10px] text-neon-green font-mono uppercase tracking-widest">Certificate of</div>
                   <div className="text-sm font-bold tracking-tight">AUTHENTICITY</div>
@@ -467,7 +465,7 @@ function WorkflowDemo() {
       <div className="relative z-20 mb-16 md:mb-24">
         <div className="flex items-center gap-4 mb-4">
           <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-neon-green group-hover:scale-110 group-hover:bg-neon-green/10 transition-all duration-300">
-            <ShieldCheck className="w-6 h-6" />
+            <img src="/logo-udesign.svg" alt="U_Design" className="w-6 h-6 object-contain" />
           </div>
           <h3 className="text-3xl font-bold text-white">The Protection Workflow</h3>
         </div>
