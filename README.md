@@ -67,17 +67,18 @@ npm install
 ### 2. Configure Environment Variables
 U_Design heavily relies on external services for AI analysis, decentralized storage, and database management. You will need to provide your own API keys for these services to function.
 
+#### A. Create `.env` File
 Create a new file named `.env` in the root directory of the project, and insert the following configuration block:
 
 ```env
-# 🧠 GOOGLE GEMINI AI KEY (For Semantic Fingerprinting)
+# GOOGLE GEMINI AI KEY (For Semantic Fingerprinting)
 VITE_GEMINI_API_KEY="your_gemini_api_key"
 
-# 🧊 PINATA IPFS KEYS (For Decentralized Storage)
+# PINATA IPFS KEYS (For Decentralized Storage)
 VITE_PINATA_API_KEY="your_pinata_api_key"
 VITE_PINATA_API_SECRET="your_pinata_api_secret"
 
-# 🔥 FIREBASE CONFIGURATION KEYS (For Auth & Vault Database)
+# FIREBASE CONFIGURATION KEYS (For Auth & Vault Database)
 VITE_FIREBASE_API_KEY="your_firebase_api_key"
 VITE_FIREBASE_AUTH_DOMAIN="your_firebase_auth_domain"
 VITE_FIREBASE_PROJECT_ID="your_firebase_project_id"
@@ -86,6 +87,22 @@ VITE_FIREBASE_MESSAGING_SENDER_ID="your_firebase_messaging_sender_id"
 VITE_FIREBASE_APP_ID="your_firebase_app_id"
 ```
 > **Security Note**: This `.env` file contains highly sensitive keys. It is automatically ignored by Git (via `.gitignore`), ensuring your credentials are never exposed to the public repository.
+
+#### B. Create `firebase-applet-config.json`
+To prevent import errors when starting the development server, you must create a placeholder file named `firebase-applet-config.json` in the root directory. You can leave the values empty as they will be automatically overridden by your `.env` file above:
+
+```json
+{
+  "projectId": "",
+  "appId": "",
+  "apiKey": "",
+  "authDomain": "",
+  "firestoreDatabaseId": "",
+  "storageBucket": "",
+  "messagingSenderId": "",
+  "measurementId": ""
+}
+```
 
 ### 3. Start the Platform
 Once your environment variables are securely set, start the Vite development server:
