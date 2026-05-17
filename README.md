@@ -40,35 +40,44 @@ By combining the immutability of decentralized storage with advanced artificial 
 |---|---|
 | **Frontend** | React 19, Vite, Tailwind CSS v4, TypeScript, Framer Motion |
 | **AI Engine** | Google GenAI SDK (Gemini 2.5 Flash) |
-| **Web3 Storage** | Pinata (IPFS) Decentralized Network |
+| **Decentralized Storage** | Pinata (IPFS) Network |
 | **Backend & Auth** | Firebase (Firestore, Authentication) |
 | **Animation & UX** | Lenis (Smooth Scroll), Framer Motion |
 
 ## 🚀 Getting Started
 
-### Prerequisites
-Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
+Follow these step-by-step instructions to set up the U_Design platform on your local machine.
 
-### 1. Installation
-Clone this repository and install the dependencies:
+### Prerequisites
+Before you begin, ensure you have the following installed:
+- [Node.js](https://nodejs.org/) (Version 18 or higher recommended)
+- A package manager like `npm` (which comes with Node.js)
+
+### 1. Clone & Install
+First, clone the repository to your local machine and navigate into the project directory:
 ```bash
 git clone https://github.com/cybort18/U_Design.git
 cd U_Design
+```
+Then, install all required dependencies:
+```bash
 npm install
 ```
 
-### 2. Environment Variables
-Create a `.env` file in the root directory and securely configure your API keys:
+### 2. Configure Environment Variables
+U_Design heavily relies on external services for AI analysis, decentralized storage, and database management. You will need to provide your own API keys for these services to function.
+
+Create a new file named `.env` in the root directory of the project, and insert the following configuration block:
 
 ```env
-# GOOGLE GEMINI AI KEY
+# 🧠 GOOGLE GEMINI AI KEY (For Semantic Fingerprinting)
 VITE_GEMINI_API_KEY="your_gemini_api_key"
 
-# PINATA IPFS KEYS
+# 🧊 PINATA IPFS KEYS (For Decentralized Storage)
 VITE_PINATA_API_KEY="your_pinata_api_key"
 VITE_PINATA_API_SECRET="your_pinata_api_secret"
 
-# FIREBASE CONFIGURATION KEYS
+# 🔥 FIREBASE CONFIGURATION KEYS (For Auth & Vault Database)
 VITE_FIREBASE_API_KEY="your_firebase_api_key"
 VITE_FIREBASE_AUTH_DOMAIN="your_firebase_auth_domain"
 VITE_FIREBASE_PROJECT_ID="your_firebase_project_id"
@@ -76,13 +85,14 @@ VITE_FIREBASE_STORAGE_BUCKET="your_firebase_storage_bucket"
 VITE_FIREBASE_MESSAGING_SENDER_ID="your_firebase_messaging_sender_id"
 VITE_FIREBASE_APP_ID="your_firebase_app_id"
 ```
-> **Note**: For security, your `.env` file is git-ignored by default.
+> **Security Note**: This `.env` file contains highly sensitive keys. It is automatically ignored by Git (via `.gitignore`), ensuring your credentials are never exposed to the public repository.
 
-### 3. Run Development Server
+### 3. Start the Platform
+Once your environment variables are securely set, start the Vite development server:
 ```bash
 npm run dev
 ```
-Navigate to `http://localhost:3000` to see the application in action.
+The terminal will display the local network link where the U_Design platform is actively running.
 
 ## 🔒 The Protection Workflow
 1. **Initiation**: A creator drags and drops their original digital artwork.
