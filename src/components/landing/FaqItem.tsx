@@ -7,7 +7,7 @@ export default function FaqItem({ question, answer, isOpen, onToggle }: { questi
   return (
     <div 
       className={cn(
-        "glass border rounded-xl overflow-hidden transition-all duration-300",
+        "glass border rounded-xl overflow-hidden transition-[border-color,box-shadow] duration-300 transform-gpu",
         isOpen 
           ? "border-neon-green/50 shadow-[0_0_15px_rgba(0,255,163,0.2)]" 
           : "border-white/5 hover:border-neon-green/30 hover:shadow-[0_0_10px_rgba(0,255,163,0.1)]"
@@ -30,4 +30,4 @@ export default function FaqItem({ question, answer, isOpen, onToggle }: { questi
       </div>
     </div>
   );
-}
+}

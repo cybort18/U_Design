@@ -193,7 +193,7 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false }}
               transition={{ duration: 0.6 }}
-              className="glass p-8 rounded-3xl relative overflow-hidden flex flex-col border border-white/5 hover:border-red-500/30 hover:shadow-[0_10px_40px_rgba(239,68,68,0.1)] hover:-translate-y-2 transition-all duration-300 ease-out group bg-gradient-to-b from-white/5 to-transparent"
+              className="glass p-8 rounded-3xl relative overflow-hidden flex flex-col border border-white/5 hover:border-red-500/30 hover:shadow-[0_10px_40px_rgba(239,68,68,0.1)] hover:-translate-y-2 transition-[border-color,box-shadow,transform] duration-300 ease-out group bg-gradient-to-b from-white/5 to-transparent"
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500/0 via-red-500/50 to-red-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
@@ -226,7 +226,7 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="glass p-8 rounded-3xl relative overflow-hidden flex flex-col border border-white/5 hover:border-yellow-500/30 hover:shadow-[0_10px_40px_rgba(234,179,8,0.1)] hover:-translate-y-2 transition-all duration-300 ease-out group bg-gradient-to-b from-white/5 to-transparent"
+              className="glass p-8 rounded-3xl relative overflow-hidden flex flex-col border border-white/5 hover:border-yellow-500/30 hover:shadow-[0_10px_40px_rgba(234,179,8,0.1)] hover:-translate-y-2 transition-[border-color,box-shadow,transform] duration-300 ease-out group bg-gradient-to-b from-white/5 to-transparent"
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500/0 via-yellow-500/50 to-yellow-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
@@ -259,7 +259,7 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="bg-obsidian/60 backdrop-blur-2xl p-8 rounded-3xl relative overflow-hidden flex flex-col border border-neon-green/40 shadow-[0_15px_50px_rgba(0,255,163,0.15)] hover:border-neon-green hover:shadow-[0_20px_60px_rgba(0,255,163,0.3)] hover:-translate-y-2 transition-all duration-500 ease-out group"
+              className="bg-obsidian/60 backdrop-blur-2xl p-8 rounded-3xl relative overflow-hidden flex flex-col border border-neon-green/40 shadow-[0_15px_50px_rgba(0,255,163,0.15)] hover:border-neon-green hover:shadow-[0_20px_60px_rgba(0,255,163,0.3)] hover:-translate-y-2 transition-[border-color,box-shadow,transform] duration-500 ease-out group transform-gpu isolate"
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-neon-green/0 via-neon-green to-neon-green/0 shadow-[0_0_15px_rgba(0,255,163,1)]"></div>
               <div className="absolute -top-24 -right-24 w-48 h-48 bg-neon-green/20 rounded-full blur-[60px] group-hover:bg-neon-green/30 transition-all duration-500"></div>
