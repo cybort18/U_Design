@@ -15,6 +15,10 @@
   [![Firebase](https://img.shields.io/badge/Firebase-11.0-FFCA28?logo=firebase&logoColor=black)](https://firebase.google.com)
   [![Pinata](https://img.shields.io/badge/Pinata_IPFS-Storage-5D3FD3?logo=ipfs&logoColor=white)](https://pinata.cloud/)
   [![Gemini](https://img.shields.io/badge/Gemini_AI-2.5_Flash-1A73E8?logo=google&logoColor=white)](https://aistudio.google.com/)
+  
+  <br />
+  
+  [![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Online-00FFA3?style=for-the-badge&labelColor=1a1a1a&logoColor=white)](https://u-design-920293437803.asia-southeast2.run.app)
 </div>
 
 <hr />
@@ -104,12 +108,18 @@ To prevent import errors when starting the development server, you must create a
 }
 ```
 
+#### C. Add `serviceAccountKey.json` (Required for Secure Backend)
+To authorize the secure backend server to write to Firestore on behalf of the user, you must download your Firebase Admin SDK service account key.
+1. Go to your Firebase Console > Project Settings > Service Accounts.
+2. Click **Generate new private key**.
+3. Rename the downloaded file to `serviceAccountKey.json` and place it in the root directory of this project.
+
 ### 3. Start the Platform
-Once your environment variables are securely set, start the Vite development server:
+Once your environment variables and service account key are securely set, start both the secure backend server and the Vite frontend simultaneously using one command:
 ```bash
-npm run dev
+npm start
 ```
-The terminal will display the local network link where the U_Design platform is actively running.
+This will run the backend on `http://localhost:3001` and the frontend on `http://localhost:3000`.
 
 ## 🔒 The Protection Workflow
 1. **Initiation**: A creator drags and drops their original digital artwork.

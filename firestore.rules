@@ -27,7 +27,7 @@ service cloud.firestore {
     match /artworks/{artworkId} {
       allow get: if isSignedIn() && isVerified() && isValidId(artworkId) && existing().userId == request.auth.uid;
       allow list: if isSignedIn() && isVerified() && existing().userId == request.auth.uid;
-      allow create: if isSignedIn() && isVerified() && isValidId(artworkId) && isValidArtwork(incoming());
+      allow create: if false; // Creation is now strictly handled by the secure Backend (Firebase Admin)
       allow delete: if isSignedIn() && isVerified() && isValidId(artworkId) && existing().userId == request.auth.uid;
       allow update: if false; // Artworks are immutable once created
     }
