@@ -12,24 +12,12 @@ import TechDemoSection from '../components/landing/TechDemoSection';
 import WorkflowDemo from '../components/landing/WorkflowDemo';
 import WorkflowPhasesGrid from '../components/landing/WorkflowPhasesGrid';
 
-
 export default function LandingPage() {
   const { scrollYProgress } = useScroll();
   const yHero = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const opacityHero = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
-  const [marqueePosition, setMarqueePosition] = useState(0);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
-
-  useEffect(() => {
-    let animationFrameId: number;
-    const animateMarquee = () => {
-      setMarqueePosition((prev) => (prev - 1) % 1000); // Reset after arbitrary length
-      animationFrameId = requestAnimationFrame(animateMarquee);
-    };
-    animationFrameId = requestAnimationFrame(animateMarquee);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, []);
 
   const dummyCIDs = [
     { type: 'SECURED', text: 'CID: QmYwAP...' },
@@ -386,39 +374,74 @@ export default function LandingPage() {
           >
             <span className="relative z-10 flex items-center gap-3">
               Protect Your Artwork Now
-            </span>
+              </span>
           </Link>
         </motion.div>
       </section>
 
       {/* 2.5 Tech Stack / Powered By */}
-      <section className="py-12 border-t border-white/10 bg-white/5 backdrop-blur-md relative z-10 w-full mt-auto">
-        <div className="max-w-6xl mx-auto px-4">
-          <p className="text-center text-xs font-mono tracking-[0.2em] uppercase text-slate-500 mb-8">
+      <section className="pt-12 pb-20 relative z-10 w-full mt-auto bg-transparent flex flex-col items-center justify-center overflow-hidden">
+        {/* Smooth glow / border arc effect at the top */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/4 max-w-xs h-[1px] bg-gradient-to-r from-transparent via-white/70 to-transparent blur-[1px]"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 max-w-xl h-24 bg-white/10 blur-[80px] rounded-[100%] pointer-events-none"></div>
+
+        <div className="max-w-6xl mx-auto px-4 relative z-10 flex flex-col items-center">
+          <p className="text-center text-sm md:text-base font-semibold tracking-[0.2em] uppercase text-slate-300 mb-8">
             POWERED BY
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
-            <div className="group flex items-center justify-center transition-all duration-300 opacity-50 grayscale hover:opacity-100 hover:grayscale-0">
-              <div className="relative">
-                <div className="absolute inset-0 bg-neon-green/20 blur-xl rounded-full group-hover:bg-neon-green/40 transition-colors duration-300"></div>
-                <span className="relative z-10 text-xl font-bold tracking-tighter text-white group-hover:drop-shadow-[0_0_8px_rgba(0,255,163,0.8)]"><span className="text-neon-green">Google</span> Gemini AI</span>
-              </div>
+          <div className="flex flex-wrap items-center justify-center gap-10 md:gap-14 lg:gap-16">
+            
+            {/* Gemini */}
+            <div className="group flex items-center transition-all duration-500 cursor-default">
+              <div 
+                className="h-5 md:h-[22px] aspect-[3.04] bg-slate-400 opacity-60 group-hover:opacity-100 group-hover:bg-neon-green group-hover:drop-shadow-[0_0_12px_rgba(0,255,163,0.6)] transition-all duration-300"
+                style={{
+                  maskImage: 'url(https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg)',
+                  maskSize: 'contain',
+                  maskRepeat: 'no-repeat',
+                  maskPosition: 'center',
+                  WebkitMaskImage: 'url(https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg)',
+                  WebkitMaskSize: 'contain',
+                  WebkitMaskRepeat: 'no-repeat',
+                  WebkitMaskPosition: 'center'
+                }}
+              />
             </div>
-            <div className="group transition-all duration-300 opacity-50 grayscale hover:opacity-100 hover:grayscale-0">
-              <span className="text-xl font-bold tracking-tight text-white group-hover:text-neon-green transition-colors duration-300 group-hover:drop-shadow-[0_0_8px_rgba(0,255,163,0.8)]">Google Cloud</span>
+
+            {/* Google Cloud */}
+            <div className="group flex items-center transition-all duration-500 cursor-default">
+              <div 
+                className="h-5 md:h-[22px] aspect-[6.24] bg-slate-400 opacity-60 group-hover:opacity-100 group-hover:bg-neon-green group-hover:drop-shadow-[0_0_12px_rgba(0,255,163,0.6)] transition-all duration-300"
+                style={{
+                  maskImage: 'url(https://upload.wikimedia.org/wikipedia/commons/5/51/Google_Cloud_logo.svg)',
+                  maskSize: 'contain',
+                  maskRepeat: 'no-repeat',
+                  maskPosition: 'center',
+                  WebkitMaskImage: 'url(https://upload.wikimedia.org/wikipedia/commons/5/51/Google_Cloud_logo.svg)',
+                  WebkitMaskSize: 'contain',
+                  WebkitMaskRepeat: 'no-repeat',
+                  WebkitMaskPosition: 'center'
+                }}
+              />
             </div>
-            <div className="group transition-all duration-300 opacity-50 grayscale hover:opacity-100 hover:grayscale-0">
-              <span className="text-xl font-bold tracking-tight text-white group-hover:text-neon-green transition-colors duration-300 group-hover:drop-shadow-[0_0_8px_rgba(0,255,163,0.8)]">IPFS</span>
+
+            <div className="group flex items-center transition-all duration-500 cursor-default">
+              <span className="text-base md:text-lg font-bold tracking-tight text-slate-400 opacity-60 group-hover:opacity-100 group-hover:text-neon-green group-hover:drop-shadow-[0_0_12px_rgba(0,255,163,0.6)] transition-all duration-300">IPFS</span>
             </div>
-            <div className="group transition-all duration-300 opacity-50 grayscale hover:opacity-100 hover:grayscale-0">
-              <span className="text-xl font-bold tracking-tight text-white group-hover:text-neon-green transition-colors duration-300 group-hover:drop-shadow-[0_0_8px_rgba(0,255,163,0.8)]">Pinata</span>
+            
+            <div className="group flex items-center transition-all duration-500 cursor-default">
+              <span className="text-base md:text-lg font-bold tracking-tight text-slate-400 opacity-60 group-hover:opacity-100 group-hover:text-neon-green group-hover:drop-shadow-[0_0_12px_rgba(0,255,163,0.6)] transition-all duration-300">Pinata</span>
             </div>
-            <div className="group transition-all duration-300 opacity-50 grayscale hover:opacity-100 hover:grayscale-0">
-              <span className="text-xl font-bold tracking-tight text-white group-hover:text-neon-green transition-colors duration-300 group-hover:drop-shadow-[0_0_8px_rgba(0,255,163,0.8)]">React</span>
+            
+            <div className="group flex items-center transition-all duration-500 cursor-default">
+              <span className="text-base md:text-lg font-bold tracking-tight text-slate-400 opacity-60 group-hover:opacity-100 group-hover:text-neon-green group-hover:drop-shadow-[0_0_12px_rgba(0,255,163,0.6)] transition-all duration-300">React</span>
             </div>
-            <div className="group transition-all duration-300 opacity-50 grayscale hover:opacity-100 hover:grayscale-0">
-              <span className="text-xl font-bold tracking-tight text-white group-hover:text-neon-green transition-colors duration-300 group-hover:drop-shadow-[0_0_8px_rgba(0,255,163,0.8)]">Tailwind CSS</span>
+            
+            <div className="group flex items-center transition-all duration-500 cursor-default">
+              <span className="text-base md:text-lg font-bold tracking-tight text-slate-400 opacity-60 group-hover:opacity-100 group-hover:text-neon-green group-hover:drop-shadow-[0_0_12px_rgba(0,255,163,0.6)] transition-all duration-300">Tailwind CSS</span>
             </div>
+
           </div>
         </div>
       </section>
