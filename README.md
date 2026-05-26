@@ -48,6 +48,29 @@ By combining the immutability of decentralized storage with advanced artificial 
 | **Backend & Auth** | Firebase (Firestore, Authentication) |
 | **Animation & UX** | Lenis (Smooth Scroll), Framer Motion |
 
+## 📂 Folder Structure
+
+Here is a brief overview of the project's directory structure and its purpose:
+
+```text
+U_Design/
+├── backend/               # Secure backend server for Firebase admin operations
+│   └── server.ts          # Express server handling AI and IPFS interactions
+├── public/                # Static assets like logos and icons
+├── src/                   # Main frontend source code
+│   ├── components/        # Reusable React components (UI elements, layout)
+│   ├── contexts/          # React contexts for global state (e.g., AuthProvider)
+│   ├── lib/               # Utility functions and library configurations
+│   ├── pages/             # Application routes/pages (Landing, Vault, Verify, etc.)
+│   ├── services/          # External service integrations (Firebase, API calls)
+│   ├── App.tsx            # Root React component with routing logic
+│   └── main.tsx           # Entry point for the React application
+├── .env                   # Environment variables (API keys, etc.)
+├── firebase-applet-config.json # Firebase config placeholder for local development
+├── package.json           # Project metadata, dependencies, and npm scripts
+└── vite.config.ts         # Vite bundler configuration
+```
+
 ## 🚀 Getting Started
 
 Follow these step-by-step instructions to set up the U_Design platform on your local machine.
