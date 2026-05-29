@@ -4,7 +4,7 @@ export default function BackgroundGlow() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
       {/* Grid Pattern */}
-      <div className="fixed inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_100%_100%_at_50%_50%,#000_60%,transparent_100%)] pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none z-0" />
       
       {/* Top Left Neon Glow - Optimized without CSS blur */}
       <motion.div 
@@ -16,15 +16,7 @@ export default function BackgroundGlow() {
         className="absolute -top-[300px] -left-[300px] w-[800px] h-[800px] bg-[radial-gradient(circle_at_center,rgba(0,255,163,0.15)_0%,transparent_60%)] rounded-full will-change-transform"
       />
       
-      {/* Bottom Right Emerald Glow - Optimized without CSS blur */}
-      <motion.div 
-        animate={{ 
-          scale: [1, 1.2, 1],
-          opacity: [0.6, 1, 0.6],
-        }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute -bottom-[400px] -right-[200px] w-[1000px] h-[1000px] bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.1)_0%,transparent_60%)] rounded-full will-change-transform"
-      />
+
 
       {/* Center Subtle Aurora Ribbon - Optimized without CSS blur */}
       <motion.div 

@@ -73,7 +73,8 @@ export default function ProtectPage() {
       formData.append('file', selectedFile);
       formData.append('userId', user?.uid || '');
 
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const apiUrl = import.meta.env.VITE_API_URL || (isLocal ? 'http://localhost:3001' : '');
       const response = await fetch(`${apiUrl}/api/protect`, {
         method: 'POST',
         headers: {

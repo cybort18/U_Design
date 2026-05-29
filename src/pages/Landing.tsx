@@ -7,7 +7,7 @@ import { cn } from '../lib/utils';
 import BackgroundGlow from '../components/BackgroundGlow';
 
 import FaqItem from '../components/landing/FaqItem';
-import WhoIsThisForSection from '../components/landing/WhoIsThisForSection';
+import HybridProtectionSection from '../components/landing/HybridProtectionSection';
 import TechDemoSection from '../components/landing/TechDemoSection';
 import WorkflowDemo from '../components/landing/WorkflowDemo';
 import WorkflowPhasesGrid from '../components/landing/WorkflowPhasesGrid';
@@ -47,17 +47,7 @@ export default function LandingPage() {
           style={{ y: yHero, opacity: opacityHero }}
           className="relative z-10 text-center max-w-4xl mx-auto flex flex-col items-center"
         >
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: false }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="mb-8 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neon-green/30 bg-neon-green/5 text-neon-green text-xs font-mono uppercase tracking-widest backdrop-blur-md shadow-[0_0_15px_rgba(0,255,163,0.2)]"
-          >
-            <div className="w-1.5 h-1.5 rounded-full bg-neon-green animate-pulse"></div>
-            Web2.5 Anti-Plagiarism Engine Active
-          </motion.div>
-          
+
           <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black tracking-tighter leading-tight mb-6">
             <motion.span
               className="inline-block"
@@ -136,7 +126,7 @@ export default function LandingPage() {
       </section>
 
       {/* 3. The Manifesto */}
-      <section className="py-32 md:py-48 px-4 relative z-10 overflow-hidden">
+      <section className="py-32 md:py-48 px-4 relative z-10">
         {/* Subtle background glow */}
         <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-neon-green/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-emerald-500/5 blur-[100px] rounded-full translate-y-1/3 -translate-x-1/3 pointer-events-none"></div>
@@ -157,14 +147,14 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* NEW SECTION: Who Is This For */}
-      <WhoIsThisForSection />
+      {/* NEW SECTION: Hybrid Protection */}
+      <HybridProtectionSection />
 
       {/* NEW SECTION: Tech Demo */}
       <TechDemoSection />
 
       {/* 4. The Comparison Matrix */}
-      <section className="py-24 px-4 relative z-10 overflow-hidden">
+      <section className="py-24 px-4 relative z-10">
         {/* Radial glow */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-neon-green/5 blur-[150px] rounded-[100%] pointer-events-none"></div>
 
@@ -327,7 +317,7 @@ export default function LandingPage() {
       </section>
 
       {/* 6. The Final CTA */}
-      <section className="py-32 px-4 relative z-10 flex flex-col items-center overflow-hidden">
+      <section className="py-32 px-4 relative z-10 flex flex-col items-center">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] max-w-[600px] max-h-[600px] bg-neon-green/5 blur-[100px] rounded-full pointer-events-none"></div>
         
         <motion.div 
@@ -380,7 +370,7 @@ export default function LandingPage() {
       </section>
 
       {/* 2.5 Tech Stack / Powered By */}
-      <section className="pt-12 pb-20 relative z-10 w-full mt-auto bg-transparent flex flex-col items-center justify-center overflow-hidden">
+      <section className="pt-12 pb-20 relative z-10 w-full mt-auto bg-transparent flex flex-col items-center justify-center">
         {/* Smooth glow / border arc effect at the top */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/4 max-w-xs h-[1px] bg-gradient-to-r from-transparent via-white/70 to-transparent blur-[1px]"></div>

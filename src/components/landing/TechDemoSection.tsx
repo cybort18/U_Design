@@ -8,7 +8,7 @@ import WorkflowPhasesGrid from './WorkflowPhasesGrid';
 
 export default function TechDemoSection() {
   return (
-    <section className="py-24 px-4 relative z-10 overflow-hidden">
+    <section className="py-24 px-4 relative z-10">
       {/* Static Background Elements */}
       <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-neon-green/5 blur-[150px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2" />
       <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none translate-x-1/2 translate-y-1/2" />

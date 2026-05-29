@@ -7,6 +7,11 @@ import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 import { getAuth } from 'firebase-admin/auth';
 import * as dotenv from 'dotenv';
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
@@ -62,7 +67,7 @@ async function uploadToPinata(fileBuffer: Buffer, originalName: string, mimeType
   }
 
   const formData = new FormData();
-  const blob = new Blob([fileBuffer], { type: mimeType });
+  const blob = new Blob([new Uint8Array(fileBuffer)], { type: mimeType });
   formData.append('file', blob, originalName);
 
   const res = await fetch('https://api.pinata.cloud/pinning/pinFileToIPFS', {
@@ -208,6 +213,12 @@ app.post('/api/protect', upload.single('file'), async (req, res) => {
     console.error('Protect API Error:', error);
      res.status(500).json({ error: error.message || 'Internal Server Error' });
   }
+});
+
+// Serve static frontend files in production
+app.use(express.static(path.join(__dirname, '../dist')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 app.listen(port, () => {
