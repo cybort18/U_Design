@@ -54,8 +54,11 @@ Here is a brief overview of the project's directory structure and its purpose:
 
 ```text
 U_Design/
-├── backend/               # Secure backend server for Firebase admin operations
-│   └── server.ts          # Express server handling AI and IPFS interactions
+├── backend/               # Secure backend server for API and file handling
+│   ├── config/            # Backend configurations (e.g., Firebase setup)
+│   ├── routes/            # Express API routes (e.g., /api/protect with Rate Limiting)
+│   ├── services/          # External integrations (Pinata IPFS, Gemini AI)
+│   └── server.ts          # Express server entry point & static file serving
 ├── public/                # Static assets like logos and icons
 ├── src/                   # Main frontend source code
 │   ├── components/        # Reusable React components (UI elements, layout)
