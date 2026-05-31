@@ -9,6 +9,7 @@ dotenv.config();
 
 // Imports must include .js extension since we are using ES Modules
 import protectRouter from './routes/protect.js';
+import verifyRouter from './routes/verify.js';
 // Import db just to initialize it on startup
 import './config/firebase.js'; 
 
@@ -27,6 +28,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/protect', protectRouter);
+app.use('/api/verify', verifyRouter);
 
 // Serve static frontend files in production
 app.use(express.static(path.join(__dirname, '../dist')));

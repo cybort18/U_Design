@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useAuthContext } from '../contexts/AuthProvider';
 import LoginPrompt from '../components/LoginPrompt';
 import { db } from '../services/firebase';
-import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { collection, query, where, getDocs, deleteDoc, doc, orderBy, limit, startAfter, DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
 import { handleFirestoreError, OperationType } from '../services/firestore_utils';
 
 export default function VaultPage() {
@@ -16,6 +16,9 @@ export default function VaultPage() {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [lastDoc, setLastDoc] = useState<QueryDocumentSnapshot<DocumentData> | null>(null);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   useEffect(() => {
     if (!user) return;
@@ -23,15 +26,25 @@ export default function VaultPage() {
     const fetchArtworks = async () => {
       try {
         setLoadingItems(true);
-        const q = query(collection(db, 'artworks'), where('userId', '==', user.uid));
+        const q = query(
+          collection(db, 'artworks'), 
+          where('userId', '==', user.uid),
+          orderBy('timestamp', 'desc'),
+          limit(12)
+        );
         const querySnapshot = await getDocs(q);
         const fetchedItems: any[] = [];
-        querySnapshot.forEach((doc) => {
-          fetchedItems.push({ id: doc.id, ...doc.data() });
+        querySnapshot.forEach((docSnap) => {
+          fetchedItems.push({ id: docSnap.id, ...docSnap.data() });
         });
-        // Sort by timestamp descending since we don't have indexes yet to rely on query sorting
-        fetchedItems.sort((a,b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
         setItems(fetchedItems);
+        
+        if (querySnapshot.docs.length > 0) {
+          setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
+          setHasMore(querySnapshot.docs.length === 12);
+        } else {
+          setHasMore(false);
+        }
       } catch (err) {
         handleFirestoreError(err, OperationType.GET, 'artworks', { currentUser: user });
       } finally {
@@ -42,32 +55,59 @@ export default function VaultPage() {
     fetchArtworks();
   }, [user]);
 
+  const loadMore = async () => {
+    if (!user || !lastDoc || isLoadingMore || !hasMore) return;
+    
+    try {
+      setIsLoadingMore(true);
+      const q = query(
+        collection(db, 'artworks'), 
+        where('userId', '==', user.uid),
+        orderBy('timestamp', 'desc'),
+        startAfter(lastDoc),
+        limit(12)
+      );
+      
+      const querySnapshot = await getDocs(q);
+      const fetchedItems: any[] = [];
+      querySnapshot.forEach((docSnap) => {
+        fetchedItems.push({ id: docSnap.id, ...docSnap.data() });
+      });
+      
+      setItems([...items, ...fetchedItems]);
+      
+      if (querySnapshot.docs.length > 0) {
+        setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
+        setHasMore(querySnapshot.docs.length === 12);
+      } else {
+        setHasMore(false);
+      }
+    } catch (err) {
+      console.error("Failed to load more:", err);
+    } finally {
+      setIsLoadingMore(false);
+    }
+  };
+
   const handleDelete = async () => {
     if (!deleteId) return;
     setIsDeleting(true);
     
     try {
-      const itemToDelete = items.find(item => item.id === deleteId);
-      
-      if (itemToDelete?.ipfsHash) {
-        const apiKey = import.meta.env.VITE_PINATA_API_KEY;
-        const apiSecret = import.meta.env.VITE_PINATA_API_SECRET;
-        if (apiKey && apiSecret) {
-          const response = await fetch(`https://api.pinata.cloud/pinning/unpin/${itemToDelete.ipfsHash}`, {
-            method: 'DELETE',
-            headers: {
-              pinata_api_key: apiKey,
-              pinata_secret_api_key: apiSecret,
-            }
-          });
-          
-          if (!response.ok && response.status !== 404) {
-             console.warn('Failed to unpin from Pinata (but will delete locally)');
-          }
-        }
-      }
+      const token = await user?.getIdToken();
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const apiUrl = import.meta.env.VITE_API_URL || (isLocal ? 'http://localhost:3001' : '');
 
-      await deleteDoc(doc(db, 'artworks', deleteId));
+      const response = await fetch(`${apiUrl}/api/protect/${deleteId}`, {
+        method: 'DELETE',
+        headers: {
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete artwork from server');
+      }
 
       setItems(items.filter(item => item.id !== deleteId));
       
@@ -76,7 +116,9 @@ export default function VaultPage() {
       
       setDeleteId(null);
     } catch (err: any) {
-      handleFirestoreError(err, OperationType.DELETE, `artworks/${deleteId}`, { currentUser: user });
+      console.error("Delete error:", err);
+      setToastMessage(`Failed to delete artwork.`);
+      setTimeout(() => setToastMessage(''), 4000);
     } finally {
       setIsDeleting(false);
     }
@@ -214,6 +256,19 @@ export default function VaultPage() {
               </div>
             );
           })}
+        </div>
+      )}
+
+      {hasMore && items.length > 0 && !loadingItems && (
+        <div className="mt-12 text-center pb-12">
+          <button 
+            onClick={loadMore}
+            disabled={isLoadingMore}
+            className="px-8 py-3 bg-white/5 hover:bg-white/10 text-white rounded-xl transition-colors border border-white/10 disabled:opacity-50 flex items-center justify-center mx-auto cursor-pointer"
+          >
+            {isLoadingMore ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : null}
+            {isLoadingMore ? 'Loading...' : 'Load More Artworks'}
+          </button>
         </div>
       )}
     </div>

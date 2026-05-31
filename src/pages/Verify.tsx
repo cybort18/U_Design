@@ -24,17 +24,27 @@ export default function VerifyPage() {
       // Small simulated delay for the "scanning" UI effect
       await new Promise(resolve => setTimeout(resolve, 800));
 
-      // 1. Check firestore vault first (if user is logged in)
-      if (user) {
-        const q = query(collection(db, 'artworks'), where('userId', '==', user.uid), where('ipfsHash', '==', cid.trim()));
-        const querySnapshot = await getDocs(q);
-        
-        if (!querySnapshot.empty) {
-          setResult(querySnapshot.docs[0].data());
+      // 1. Check global vault via API
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const apiUrl = import.meta.env.VITE_API_URL || (isLocal ? 'http://localhost:3001' : '');
+      
+      try {
+        const verifyResponse = await fetch(`${apiUrl}/api/verify/${cid.trim()}`);
+        if (verifyResponse.ok) {
+          const data = await verifyResponse.json();
+          // Check if the current user is the owner
+          const isOwner = user && user.uid === data.ownerId;
+          
+          setResult({
+            ...data,
+            isOwner
+          });
           setStatus('found_local');
           setVerifyStep(null);
           return;
         }
+      } catch (err) {
+        console.warn("Global vault check failed or not found, falling back to IPFS gateway");
       }
 
       setVerifyStep('remote');
@@ -261,7 +271,9 @@ export default function VerifyPage() {
                   />
                   <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-neon-green/40 flex items-center gap-2">
                      <CheckCircle className="w-3.5 h-3.5 text-neon-green" />
-                     <span className="text-neon-green text-[10px] font-bold uppercase tracking-tighter">Ownership Confirmed</span>
+                     <span className="text-neon-green text-[10px] font-bold uppercase tracking-tighter">
+                       {result.isOwner ? 'Ownership Confirmed (You)' : 'Verified Creation'}
+                     </span>
                   </div>
                 </div>
               </div>
@@ -270,7 +282,9 @@ export default function VerifyPage() {
                 <div className="flex items-center space-x-3 mb-6 border-b border-white/10 pb-6">
                   <ShieldCheck className="w-8 h-8 text-neon-green" />
                   <div>
-                    <h2 className="text-neon-green text-xs font-bold uppercase tracking-[0.3em] mb-1">Authenticity Verified</h2>
+                    <h2 className="text-neon-green text-xs font-bold uppercase tracking-[0.3em] mb-1">
+                       {result.isOwner ? 'Authenticity Verified' : 'Protected by Another Creator'}
+                    </h2>
                     <h3 className="text-2xl font-semibold tracking-tight text-white mb-1">U_Design Digital Certificate</h3>
                   </div>
                 </div>

@@ -7,7 +7,7 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { db } from '../config/firebase.js';
-import { uploadToPinata } from '../services/pinataService.js';
+import { uploadToPinata, unpinFromPinata } from '../services/pinataService.js';
 import { analyzeWithGemini } from '../services/geminiService.js';
 
 const router = express.Router();
@@ -132,6 +132,51 @@ router.post('/', protectLimiter, upload.single('file'), async (req, res) => {
   } catch (error: any) {
     console.error('Protect API Error:', error);
     if (file) cleanupFile(file.path);
+    res.status(500).json({ error: error.message || 'Internal Server Error' });
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  const artworkId = req.params.id;
+  const authHeader = req.headers.authorization;
+  
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    res.status(401).json({ error: 'Unauthorized' });
+    return;
+  }
+  
+  if (!db) {
+    res.status(503).json({ error: 'Database not initialized' });
+    return;
+  }
+  
+  try {
+    const token = authHeader.split('Bearer ')[1];
+    const decodedToken = await getAuth().verifyIdToken(token);
+    const userId = decodedToken.uid;
+    
+    const docRef = db.collection('artworks').doc(artworkId);
+    const docSnap = await docRef.get();
+    
+    if (!docSnap.exists) {
+      res.status(404).json({ error: 'Artwork not found' });
+      return;
+    }
+    
+    const data = docSnap.data();
+    if (data?.userId !== userId) {
+      res.status(403).json({ error: 'Forbidden' });
+      return;
+    }
+    
+    if (data?.ipfsHash) {
+      await unpinFromPinata(data.ipfsHash);
+    }
+    
+    await docRef.delete();
+    res.status(200).json({ success: true });
+  } catch (error: any) {
+    console.error('Delete API Error:', error);
     res.status(500).json({ error: error.message || 'Internal Server Error' });
   }
 });
