@@ -1,12 +1,13 @@
-import { useState, useCallback, useRef } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { UploadCloud, CheckCircle, ShieldAlert, Copy, Download, RefreshCcw, ArrowRight, ShieldCheck, Fingerprint } from 'lucide-react';
+import { CheckCircle, ShieldAlert, RefreshCcw } from 'lucide-react';
 import { toPng } from 'html-to-image';
 import { motion, AnimatePresence } from 'motion/react';
 import { useAuthContext } from '../contexts/AuthProvider';
 import LoginPrompt from '../components/LoginPrompt';
 import CertificateCard from '../components/protect/CertificateCard';
+import UploadArea from '../components/protect/UploadArea';
+import AnalysisSteps from '../components/protect/AnalysisSteps';
 
 type ProcessState = 'idle' | 'processing' | 'success' | 'error' | 'duplicate';
 
@@ -33,21 +34,6 @@ export default function ProtectPage() {
   
   const certRef = useRef<HTMLDivElement>(null);
   const processingRef = useRef(false);
-
-  const fileToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        if (typeof reader.result === 'string') {
-          // Remove the data URL prefix (e.g., data:image/png;base64,)
-          const b64 = reader.result.split(',')[1];
-          resolve(b64);
-        }
-      };
-      reader.onerror = error => reject(error);
-    });
-  };
 
   const processArtwork = async (selectedFile: File) => {
     if (processingRef.current) return;
@@ -124,14 +110,6 @@ export default function ProtectPage() {
     }
   };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: {
-      'image/*': ['.png', '.jpeg', '.jpg', '.webp'],
-    },
-    maxFiles: 1
-  } as any);
-
   const downloadCert = async () => {
     if (!certRef.current) return;
     try {
@@ -150,7 +128,6 @@ export default function ProtectPage() {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
-    // Simple visual feedback could be added here
   };
 
   const resetState = () => {
@@ -203,140 +180,12 @@ export default function ProtectPage() {
 
       {/* Upload Zone */}
       {processState === 'idle' && (
-        <div 
-          {...getRootProps()} 
-          className={`w-full max-w-3xl aspect-[16/9] sm:aspect-video relative group cursor-pointer`}
-        >
-          <div className="absolute -inset-1 bg-gradient-to-r from-neon-green to-neon-blue rounded-3xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
-          <div className={`relative h-full w-full bg-[#15171E] rounded-2xl border transition-colors flex flex-col items-center justify-center p-8 overflow-hidden
-            ${isDragActive ? 'border-neon-green bg-[#1a1f24]' : 'border-white/10'}`}>
-            <input {...getInputProps()} />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none"></div>
-            
-            <div className="relative z-10 flex flex-col items-center text-center">
-              <div className={`p-6 rounded-full mb-6 transition-colors duration-500 
-                ${isDragActive ? 'bg-neon-green/20' : 'bg-black/40 group-hover:bg-black/60'}`}>
-                <UploadCloud className={`w-12 h-12 ${isDragActive ? 'text-neon-green animate-bounce' : 'text-slate-400 group-hover:text-white'}`} />
-              </div>
-              <h3 className="text-2xl font-semibold mb-2 text-white">
-                {isDragActive ? 'Drop to scan & protect' : 'Drag & drop artwork here'}
-              </h3>
-              <p className="text-slate-400 mb-6 font-medium">PNG, JPG, WebP up to 10MB</p>
-              <button className="px-8 py-3 rounded-xl bg-neon-green hover:bg-[#00e692] text-black font-bold uppercase tracking-widest text-xs transition-all shadow-[0_4px_20px_rgba(0,255,163,0.3)] cursor-pointer">
-                Browse Files
-              </button>
-            </div>
-          </div>
-        </div>
+        <UploadArea onDrop={onDrop} />
       )}
 
       {/* Processing State */}
       {processState === 'processing' && (
-        <div className="w-full max-w-xl mx-auto glass-card p-10 flex flex-col items-center animate-in zoom-in-95 duration-500">
-          <div className="relative w-40 h-40 mb-8 rounded-2xl overflow-hidden border border-white/10 group">
-            <div className="absolute inset-0 bg-gradient-to-t from-neon-green/20 to-transparent mix-blend-overlay z-10"></div>
-            
-            {/* Scannning line effect */}
-            <motion.div 
-              className="absolute top-0 left-0 right-0 h-1 bg-neon-blue shadow-[0_0_15px_rgba(59,130,246,0.8)] z-20"
-              animate={{ y: [0, 160, 0] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
-            />
-            
-            {previewUrl && (
-              <motion.img 
-                src={previewUrl} 
-                alt="Preview" 
-                className="w-full h-full object-cover transition-all"
-                animate={{ filter: ['grayscale(100%) blur(2px)', 'grayscale(50%) blur(0px)', 'grayscale(100%) blur(2px)'] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              />
-            )}
-            
-            {/* Corner brackets */}
-            <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-neon-green z-20"></div>
-            <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-neon-green z-20"></div>
-            <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-neon-green z-20"></div>
-            <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-neon-green z-20"></div>
-          </div>
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-8 text-center"
-          >
-            <h2 className="text-2xl font-display font-medium text-white tracking-widest uppercase">Protocol Engaged</h2>
-            <p className="text-neon-blue text-xs font-mono mt-2 animate-pulse">Running advanced diagnostic algorithms...</p>
-          </motion.div>
-          
-          <div className="w-full space-y-4">
-            {(processStep === 'uploading' || processStep === 'checking' || processStep === 'analyzing') && (
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="bg-black/40 p-4 rounded-xl border border-white/5 flex items-center shadow-inner relative overflow-hidden"
-              >
-                {processStep === 'uploading' && (
-                  <motion.div 
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12"
-                    animate={{ x: ['-100%', '200%'] }}
-                    transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                )}
-                <div className={`w-3 h-3 rounded-full border ${processStep === 'uploading' ? 'border-neon-green' : 'border-slate-600'} flex items-center justify-center mr-4`}>
-                  {processStep === 'uploading' && <div className="w-1.5 h-1.5 rounded-full bg-neon-green animate-ping"></div>}
-                  {processStep !== 'uploading' && <CheckCircle className="w-3 h-3 text-neon-green" />}
-                </div>
-                <p className={`text-sm font-mono tracking-tight whitespace-nowrap overflow-hidden ${processStep === 'uploading' ? 'text-slate-300' : 'text-slate-500'}`}>
-                  Securing image & hashing to IPFS...
-                </p>
-              </motion.div>
-            )}
-
-            {(processStep === 'checking' || processStep === 'analyzing') && (
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="bg-black/40 p-4 rounded-xl border border-white/5 flex items-center shadow-inner relative overflow-hidden"
-              >
-                {processStep === 'checking' && (
-                  <motion.div 
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12"
-                    animate={{ x: ['-100%', '200%'] }}
-                    transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                )}
-                <div className={`w-3 h-3 rounded-full border ${processStep === 'checking' ? 'border-neon-blue' : 'border-slate-600'} flex items-center justify-center mr-4`}>
-                  {processStep === 'checking' && <div className="w-1.5 h-1.5 rounded-full bg-neon-blue animate-ping"></div>}
-                  {processStep !== 'checking' && <CheckCircle className="w-3 h-3 text-neon-blue" />}
-                </div>
-                <p className={`text-sm font-mono tracking-tight whitespace-nowrap overflow-hidden ${processStep === 'checking' ? 'text-slate-300' : 'text-slate-500'}`}>
-                  Checking global ledger for duplicates...
-                </p>
-              </motion.div>
-            )}
-
-            {(processStep === 'analyzing') && (
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="bg-black/40 p-4 rounded-xl border border-white/5 flex items-center shadow-inner relative overflow-hidden"
-              >
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12"
-                  animate={{ x: ['-100%', '200%'] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                />
-                <div className="w-3 h-3 rounded-full border border-purple-500 flex items-center justify-center mr-4">
-                  <div className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-ping"></div>
-                </div>
-                <p className="text-sm text-slate-300 font-mono tracking-tight whitespace-nowrap overflow-hidden text-glow-purple">
-                  Analyzing Semantic Fingerprint with AI... 
-                </p>
-              </motion.div>
-            )}
-          </div>
-        </div>
+        <AnalysisSteps processStep={processStep} previewUrl={previewUrl} />
       )}
 
       {/* Error State */}
