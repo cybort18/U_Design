@@ -167,8 +167,8 @@ export default function ProtectPage() {
 
       {/* Title Area */}
       {processState === 'idle' && (
-        <div className="text-center mb-12 max-w-2xl mx-auto">
-          <h1 className="text-5xl md:text-6xl font-display font-black text-white mb-6 tracking-tight leading-tight">
+        <div className="text-center mb-8 md:mb-12 max-w-2xl mx-auto px-4">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-black text-white mb-6 tracking-tight leading-tight">
             Immortalize your <br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-green text-glow-green">Digital Identity</span>
           </h1>

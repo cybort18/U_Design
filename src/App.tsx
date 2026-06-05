@@ -12,13 +12,19 @@ import { AuthProvider } from './contexts/AuthProvider';
 
 export default function App() {
   useEffect(() => {
-    const lenis = new Lenis({
-      autoRaf: true,
-    });
+    // Disable smooth scrolling on touch devices for better native mobile scrolling performance
+    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    
+    if (!isTouchDevice) {
+      const lenis = new Lenis({
+        autoRaf: true,
+        smoothWheel: true,
+      });
 
-    return () => {
-      lenis.destroy();
-    };
+      return () => {
+        lenis.destroy();
+      };
+    }
   }, []);
 
   return (

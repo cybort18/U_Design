@@ -90,12 +90,12 @@ export default function VerifyPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8 mt-12 mb-24">
-      <div className="text-center">
+    <div className="max-w-4xl mx-auto space-y-8 mt-8 md:mt-12 mb-24">
+      <div className="text-center px-4">
         <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-white/5 mb-4 border border-white/10 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
           <Search className="w-8 h-8 text-neon-blue animate-pulse" />
         </div>
-        <h1 className="text-4xl md:text-5xl font-display font-bold text-white tracking-tight">Authenticity Verification</h1>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-white tracking-tight">Authenticity Verification</h1>
         <p className="text-lg text-slate-400 mt-4 max-w-2xl mx-auto">
           Enter an IPFS CID to verify its original creator, registration timestamp, and AI Fingerprint data across the decentralized network.
         </p>
@@ -251,7 +251,7 @@ export default function VerifyPage() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="glass-card p-8 md:p-12 relative overflow-hidden box-glow-green"
+            className="glass-card p-6 md:p-8 lg:p-12 relative overflow-hidden box-glow-green"
           >
             <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-neon-green/5 blur-[80px] rounded-full pointer-events-none"></div>
             
@@ -296,7 +296,7 @@ export default function VerifyPage() {
                       <span className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">AI Semantic Fingerprint</span>
                     </div>
                     {result.fingerprint && (
-                      <div className="grid grid-cols-2 gap-4 text-xs relative z-10">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs relative z-10">
                         <div>
                           <p className="text-gray-500 mb-1">Art Style</p>
                           <p className="text-white font-medium">{result.fingerprint.artStyle}</p>
@@ -309,7 +309,7 @@ export default function VerifyPage() {
                             ))}
                           </div>
                         </div>
-                        <div className="col-span-2">
+                        <div className="sm:col-span-2">
                           <p className="text-gray-500 mb-1">AI Description</p>
                           <p className="text-white/80 leading-relaxed italic">"{result.fingerprint.copyrightDescription}"</p>
                         </div>

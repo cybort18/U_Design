@@ -29,7 +29,7 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-obsidian text-white selection:bg-neon-green selection:text-black overflow-hidden font-sans relative">
+    <div className="min-h-screen bg-obsidian text-white selection:bg-neon-green selection:text-black overflow-x-hidden font-sans relative">
       <BackgroundGlow />
       {/* 1. The Hero */}
       <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-32 px-4 overflow-hidden">
@@ -38,9 +38,9 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] pointer-events-none mix-blend-overlay"></div>
 
         {/* Top left Logo */}
-        <div className="absolute top-8 left-8 flex items-center gap-3">
-          <img src="/logo-company.svg" alt="Company" className="w-11 h-11 object-contain rounded-xl shadow-[0_0_15px_rgba(0,255,163,0.2)]" />
-          <img src="/logo-udesign.svg" alt="U_Design" className="h-6 object-contain" />
+        <div className="absolute top-4 left-4 md:top-8 md:left-8 flex items-center gap-2 md:gap-3 z-20">
+          <img src="/logo-company.svg" alt="Company" className="w-8 h-8 md:w-11 md:h-11 object-contain rounded-xl shadow-[0_0_15px_rgba(0,255,163,0.2)]" />
+          <img src="/logo-udesign.svg" alt="U_Design" className="h-4 md:h-6 object-contain" />
         </div>
 
         <motion.div 
@@ -48,7 +48,7 @@ export default function LandingPage() {
           className="relative z-10 text-center max-w-4xl mx-auto flex flex-col items-center"
         >
 
-          <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black tracking-tighter leading-tight mb-6">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-black tracking-tighter leading-tight mb-6">
             <motion.span
               className="inline-block"
               initial={{ opacity: 0, y: 30 }}
@@ -75,7 +75,7 @@ export default function LandingPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            className="text-lg md:text-2xl text-slate-400 max-w-3xl leading-relaxed mb-10 font-light"
+            className="text-base sm:text-lg md:text-2xl text-slate-400 max-w-3xl leading-relaxed mb-10 font-light px-4"
           >
             Secure your original artwork on the blockchain-ready IPFS network, protected by AI Semantic Fingerprinting. <span className="text-neon-green">Zero crypto wallet required.</span>
           </motion.p>

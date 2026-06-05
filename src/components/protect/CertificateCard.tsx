@@ -51,7 +51,7 @@ export default function CertificateCard({
       {/* Certificate Card */}
       <div 
         ref={certRef}
-        className="relative bg-obsidian border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl p-8 md:p-10 lg:p-12 box-glow-green"
+        className="relative bg-obsidian border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl p-6 md:p-8 lg:p-10 box-glow-green"
       >
         {/* Texture & Background Overlay */}
         <div 
@@ -103,7 +103,7 @@ export default function CertificateCard({
                   <span className="text-[9px] uppercase tracking-wider text-neon-blue font-mono bg-neon-blue/10 px-2 py-1 rounded-full border border-neon-blue/20">Confidence: 99.9%</span>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-y-6 gap-x-6 relative z-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-6 relative z-10">
                   <div className="space-y-2">
                     <p className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Art Style</p>
                     <p className="text-white text-sm font-medium">{fingerprint.artStyle}</p>
@@ -116,7 +116,7 @@ export default function CertificateCard({
                       ))}
                     </div>
                   </div>
-                  <div className="col-span-2 space-y-2 pt-4 border-t border-white/5">
+                  <div className="sm:col-span-2 space-y-2 pt-4 border-t border-white/5">
                     <p className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">AI Description Analysis</p>
                     <p className="text-gray-300 leading-relaxed italic text-sm pr-4">"{fingerprint.copyrightDescription}"</p>
                   </div>
