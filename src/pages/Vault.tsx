@@ -150,33 +150,46 @@ export default function VaultPage() {
 
       {/* Delete Confirmation Modal */}
       {deleteId !== null && createPortal(
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-          <div className="bg-[#15171E] border border-white/10 rounded-2xl p-6 max-w-sm w-full shadow-2xl animate-in zoom-in-95 duration-200">
-            <div className="flex items-center gap-3 border-b border-white/10 pb-4 mb-4">
-              <div className="w-10 h-10 rounded-full bg-rose-500/20 flex items-center justify-center">
-                <AlertTriangle className="w-5 h-5 text-rose-500" />
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in duration-300">
+          <div className="bg-[#15171E]/90 backdrop-blur-xl border border-rose-500/30 rounded-3xl p-8 max-w-md w-full shadow-[0_0_40px_rgba(244,63,94,0.15)] relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-rose-500/10 blur-[80px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
+            
+            <div className="flex items-center gap-4 mb-6 relative z-10">
+              <div className="w-14 h-14 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center flex-shrink-0 shadow-[inset_0_0_15px_rgba(244,63,94,0.2)]">
+                <ShieldAlert className="w-7 h-7 text-rose-500" />
               </div>
-              <h3 className="text-xl font-semibold text-white">Revoke Protection</h3>
+              <div>
+                <h3 className="text-xl font-bold text-white tracking-tight mb-1">Revoke Protection?</h3>
+                <h4 className="text-rose-500 text-[10px] font-bold uppercase tracking-widest">Irreversible Action</h4>
+              </div>
             </div>
-            <p className="text-slate-400 mb-6 text-sm leading-relaxed">
-              Are you sure you want to revoke this artwork?<br/><br/>
-              This will remove the file from your vault and unpin it from the IPFS network permanently.
-            </p>
-            <div className="flex justify-end gap-3">
+            
+            <div className="space-y-4 mb-8 relative z-10">
+              <p className="text-slate-300 text-sm leading-relaxed">
+                This action will delete the asset from your <span className="text-white font-semibold">U_Design Vault</span> and unpin it from our primary <span className="text-white font-semibold">Pinata nodes</span>.
+              </p>
+              <div className="bg-rose-500/5 border border-rose-500/20 rounded-xl p-4">
+                <p className="text-rose-400/90 text-xs leading-relaxed italic">
+                  <strong>Note:</strong> Due to the immutable nature of the decentralized IPFS network, if your asset has already been cached by other global nodes, it may still remain accessible on the network permanently.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-3 relative z-10">
               <button 
                 onClick={() => setDeleteId(null)}
                 disabled={isDeleting}
-                className="px-4 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-5 py-2.5 rounded-xl text-sm font-bold text-slate-400 hover:text-white hover:bg-white/5 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
                 Cancel
               </button>
               <button 
                 onClick={handleDelete}
                 disabled={isDeleting}
-                className="px-4 py-2 bg-rose-500/10 hover:bg-rose-500 text-rose-500 hover:text-white rounded-lg text-sm font-medium transition-colors border border-rose-500/20 hover:border-rose-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 cursor-pointer"
+                className="px-6 py-2.5 bg-rose-500/10 hover:bg-rose-600 text-rose-500 hover:text-white rounded-xl text-sm font-bold transition-all border border-rose-500/30 hover:border-rose-600 hover:shadow-[0_0_20px_rgba(225,29,72,0.4)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 cursor-pointer"
               >
                 {isDeleting && <Loader2 className="w-4 h-4 animate-spin" />}
-                {isDeleting ? 'Revoking...' : 'Revoke'}
+                {isDeleting ? 'Revoking...' : 'Yes, Revoke Asset'}
               </button>
             </div>
           </div>
