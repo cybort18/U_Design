@@ -6,9 +6,9 @@ import { FieldValue } from 'firebase-admin/firestore';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { db } from '../config/firebase';
-import { uploadToPinata, unpinFromPinata } from '../services/pinataService';
-import { analyzeWithGemini } from '../services/geminiService';
+import { db } from '../config/firebase.js';
+import { uploadToPinata, unpinFromPinata } from '../services/pinataService.js';
+import { analyzeWithGemini } from '../services/geminiService.js';
 
 const router = express.Router();
 

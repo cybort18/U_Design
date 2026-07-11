@@ -8,10 +8,10 @@ import { fileURLToPath } from 'url';
 dotenv.config();
 
 // Imports must include .js extension since we are using ES Modules
-import protectRouter from './routes/protect';
-import verifyRouter from './routes/verify';
+import protectRouter from './routes/protect.js';
+import verifyRouter from './routes/verify.js';
 // Import db just to initialize it on startup
-import './config/firebase'; 
+import './config/firebase.js'; 
 
 
 
