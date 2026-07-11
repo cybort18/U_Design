@@ -1,11 +1,10 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, User } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import firebaseConfig from '../../firebase-applet-config.json';
 import { useState, useEffect } from 'react';
 
-// Initialize Firebase
-const customConfig = {
+// Initialize Firebase using environment variables
+const finalConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
@@ -14,11 +13,13 @@ const customConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-const finalConfig = import.meta.env.VITE_FIREBASE_API_KEY ? customConfig : firebaseConfig;
+if (!finalConfig.apiKey) {
+  console.warn("Missing VITE_FIREBASE_API_KEY environment variable. Firebase will not initialize properly.");
+}
 
 const app = initializeApp(finalConfig);
 export const auth = getAuth(app);
-export const db = getFirestore(app, finalConfig === customConfig ? undefined : firebaseConfig.firestoreDatabaseId);
+export const db = getFirestore(app);
 
 const provider = new GoogleAuthProvider();
 
