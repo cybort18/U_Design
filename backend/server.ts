@@ -30,12 +30,21 @@ app.use(express.json());
 app.use('/api/protect', protectRouter);
 app.use('/api/verify', verifyRouter);
 
-// Serve static frontend files in production
-app.use(express.static(path.join(__dirname, '../dist')));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist/index.html'));
-});
+// Serve static frontend files in production (only if not on Vercel)
+if (!process.env.VERCEL) {
+  app.use(express.static(path.join(__dirname, '../dist')));
+  // Fallback to index.html for React Router
+  app.get('*', (req, res) => {
+    // Only intercept non-api requests
+    if (!req.path.startsWith('/api/')) {
+      res.sendFile(path.join(__dirname, '../dist/index.html'));
+    }
+  });
 
-app.listen(port, () => {
-  console.log(`U_Design Secure Backend running on http://localhost:${port}`);
-});
+  app.listen(port, () => {
+    console.log(`U_Design Secure Backend running on http://localhost:${port}`);
+  });
+}
+
+// Export the Express API for Vercel Serverless Functions
+export default app;
