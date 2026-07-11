@@ -13,8 +13,7 @@ import verifyRouter from './routes/verify';
 // Import db just to initialize it on startup
 import './config/firebase'; 
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -32,6 +31,9 @@ app.use('/api/verify', verifyRouter);
 
 // Serve static frontend files in production (only if not on Vercel)
 if (!process.env.VERCEL) {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  
   app.use(express.static(path.join(__dirname, '../dist')));
   // Fallback to index.html for React Router
   app.get('*', (req, res) => {
