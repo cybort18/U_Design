@@ -147,6 +147,13 @@ npm start
 ```
 This will run the backend on `http://localhost:3001` and the frontend on `http://localhost:3000`.
 
+### 4. Deploying to Vercel (Production)
+When deploying to Vercel, the local `serviceAccountKey.json` file cannot be uploaded directly for security and architecture reasons. You must configure the Firebase Admin SDK securely using environment variables.
+1. Open your Vercel Dashboard and go to your project's **Settings > Environment Variables**.
+2. Add all the `VITE_` variables from your local `.env` file.
+3. Open your downloaded `serviceAccountKey.json`, copy the **entire** JSON text, and paste it as the value for a new environment variable named `FIREBASE_SERVICE_ACCOUNT_JSON`.
+4. Deploy your project. The secure backend Serverless Functions will automatically detect the JSON string and authenticate properly with Firebase.
+
 ## 🔒 The Protection Workflow
 1. **Initiation**: A creator drags and drops their original digital artwork.
 2. **Global Validation**: The file is hashed and verified against the global database to prevent plagiarism.
